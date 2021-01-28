@@ -1,7 +1,7 @@
 # TODO Please edit the following information in your assignment
 
 - Name: *edit me*
-- How many hours did it take you to complete this assignment? 30
+- How many hours did it take you to complete this assignment? 0.5
 - Did you collaborate with any other students/TAs/Professors? no
 - Did you use any external resources? (Cite them below)
   - https://www.programiz.com/c-programming/c-input-output
