@@ -7,5 +7,5 @@ In order to start thinking a bit algorithmically, modify this file and answer th
 
 ## Answers
 
-1. *Your answer to question 1*
-2. *Your answer to question 2*
+1. 10 times, e.g. random number is 10, user guess from 1 to 10
+2. 4 times, always put the mediem number of the range. log(2,10) ~ 4 times
