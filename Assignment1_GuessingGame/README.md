@@ -1,13 +1,13 @@
 # TODO Please edit the following information in your assignment
 
 - Name: *edit me*
-- How many hours did it take you to complete this assignment? *edit me*
-- Did you collaborate with any other students/TAs/Professors? *edit me*
+- How many hours did it take you to complete this assignment? 30
+- Did you collaborate with any other students/TAs/Professors? no
 - Did you use any external resources? (Cite them below)
-  - *edit me*
+  - https://www.programiz.com/c-programming/c-input-output
   - *edit me and add more rows if needed*
-- (Optional) What was your favorite part of the assignment? *edit me*
-- (Optional) How would you improve the assignment? *edit me*
+- (Optional) What was your favorite part of the assignment? difficulty is suitable.
+- (Optional) How would you improve the assignment? split function to rewrite it.
 
 # Logistics
 
