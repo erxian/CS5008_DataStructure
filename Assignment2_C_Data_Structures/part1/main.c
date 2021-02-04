@@ -19,39 +19,11 @@
 // You can add as many unit tests as you like
 // We will be adding our own to test your program.
 void unitTest1(){
+	queue_t* test1 = create_queue(1);
+	printf("Attempting to add %d\n",1);
+	queue_enqueue(test1,1);	
+	printf("Removing: %d\n",queue_dequeue(test1));	
 
-	queue_t* test1 = create_queue(3);
-	printf("Attempting to add %d\n", 1);
-	queue_enqueue(test1, 1);
-	printf("Attempting to add %d\n", 2);
-	queue_enqueue(test1, 2);
-	printf("Attempting to add %d\n", 3);
-	queue_enqueue(test1, 3);
-
-	printf("the data is: %d\n", *(test1->data));
-	printf("the data is: %d\n", *(test1->data + 1));
-	printf("the data is: %d\n", *(test1->data + 2));
-
-	printf("Removing: %d\n", queue_dequeue(test1));	
-	printf("Removing: %d\n", queue_dequeue(test1));	
-	
-
-	printf("Attempting to add %d\n", 4);
-	queue_enqueue(test1, 4);
-	printf("Attempting to add %d\n", 5);
-	queue_enqueue(test1, 5);
-	
-	printf("the data is: %d\n", *(test1->data));
-	printf("the data is: %d\n", *(test1->data + 1));
-	printf("the data is: %d\n", *(test1->data + 2));
-
-	printf("Removing: %d\n", queue_dequeue(test1));
-	printf("Removing: %d\n", queue_dequeue(test1));
-
-	printf("the data is: %d\n", *(test1->data));
-	printf("the data is: %d\n", *(test1->data + 1));
-	printf("the data is: %d\n", *(test1->data + 2));
-	
 	free_queue(test1);
 }
 
