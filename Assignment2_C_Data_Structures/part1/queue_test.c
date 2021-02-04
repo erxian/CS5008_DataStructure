@@ -101,6 +101,29 @@ int unitTest5(int status){
     return 1;
 }
 
+// enqueue a full queue
+int unitTest6(int status){
+	printf("========queue unitTest6========\n");
+	
+	queue_t* test6 = create_queue(3);
+	queue_enqueue(test6, 1);
+	queue_enqueue(test6, 2);
+	queue_enqueue(test6, 3);
+	queue_enqueue(test6, 4);
+
+	return 1;
+}
+
+// dequeue an empty queue
+int unitTest7(int status){
+	printf("========queue unitTest7========\n");
+
+	queue_t* test7 = create_queue(3);
+	queue_dequeue(test7);
+
+	return 1;
+}
+
 // TODO: Add more tests here
 int (*unitTests[])(int)={
     unitTest1,
@@ -108,6 +131,8 @@ int (*unitTests[])(int)={
     unitTest3,
     unitTest4,
     unitTest5,
+    unitTest6,
+    unitTest7,
     NULL
 };
 
