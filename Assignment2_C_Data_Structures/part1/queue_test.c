@@ -111,6 +111,7 @@ int unitTest6(int status){
 	queue_enqueue(test6, 3);
 	queue_enqueue(test6, 4);
 
+	free_queue(test6);
 	return 1;
 }
 
@@ -120,6 +121,8 @@ int unitTest7(int status){
 
 	queue_t* test7 = create_queue(3);
 	queue_dequeue(test7);
+
+	free_queue(test7);
 
 	return 1;
 }
