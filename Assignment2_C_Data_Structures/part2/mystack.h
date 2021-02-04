@@ -47,7 +47,7 @@ stack_t* create_stack(unsigned int capacity){
 		exit(1);
 	}
 	// create myStack
-	stack_t* myStack = (stack_t*)malloc(sizeof(stack_t*));
+	stack_t* myStack = (stack_t*)malloc(sizeof(stack_t));
 	if ( myStack == NULL ){
 		return NULL;
 	}	
@@ -107,7 +107,7 @@ int stack_enqueue(stack_t* s, int item){
 	}
 	// insert a new item
 	// insert first item
-	node_t* newNode = (node_t*)malloc(sizeof(node_t*));
+	node_t* newNode = (node_t*)malloc(sizeof(node_t));
 	if ( newNode == NULL ){
 		return -1;
 	}
@@ -160,6 +160,13 @@ void free_stack(stack_t* s){
 	free(s);
 }
 
-
+void printStack(stack_t* s){
+	node_t* itr = s->head;
+	while( itr != NULL){
+		printf("%d ", itr->data);
+		itr = itr->next;
+	}
+	printf("\n");
+}
 
 #endif
