@@ -74,6 +74,8 @@ void unitTest2(){
 	printf("the data is: %d\n", *(test2->data));
 	printf("the data is: %d\n", *(test2->data + 1));
 	printf("the data is: %d\n", *(test2->data + 2));
+	
+	free_queue(test2);
 }
 
 
@@ -81,6 +83,7 @@ void unitTest3(){
 	queue_t* test3 = create_queue(3);
 	printf("Removing: %d\n", queue_dequeue(test3));
 
+	free_queue(test3);
 }
 
 // ====================================================
