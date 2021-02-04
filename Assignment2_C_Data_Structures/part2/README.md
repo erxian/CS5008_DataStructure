@@ -37,7 +37,8 @@ We are going to talk about stacks quite a lot in this course, so it will be impo
 
 # TODO: Put your answer here
 
-*My answer is ...*
+Stack data structures are useful when the order of actions is important. They ensure that a system does not move onto a new action before completing those before. 
+For example a recursion function will call itself again and agian, the called turn shouldn't be interrupt because it will affect the final answer. A daily example might be the moulded carts in the supermarket, customers will always take/insert to the topest one instead of the medium or the last one.
 
 # Unit Tests
 
