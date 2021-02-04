@@ -43,7 +43,7 @@ typedef struct stack{
 stack_t* create_stack(unsigned int capacity){
 	// Modify the body of this function as needed.
 	if ( capacity > MAX_DEPTH ){
-		printf("Stack Capacity exceed MAX_DEPTH\n");
+		//printf("Stack Capacity exceed MAX_DEPTH\n");
 		exit(1);
 	}
 	// create myStack
@@ -102,7 +102,7 @@ int stack_enqueue(stack_t* s, int item){
 	}
 	//check if the statck if full
 	if ( stack_full(s) == 1 ){
-		printf("The Stack is Full");
+		//printf("The Stack is Full");
 		return -1;
 	}
 	// insert a new item
@@ -125,12 +125,12 @@ int stack_enqueue(stack_t* s, int item){
 int stack_dequeue(stack_t* s){
 	// check if stack is empty
 	if ( stack_empty(s) == 1 ){
-		printf("Stack is empty\n");
+		//printf("Stack is empty\n");
 		exit(1);
 	}
 	// check if stack is underflow
 	if ( s->head == NULL ){
-		printf("Stack is at the underflow layer\n");
+		//printf("Stack is at the underflow layer\n");
 		return -1;;
 	}
 	int item = s->head->data;
