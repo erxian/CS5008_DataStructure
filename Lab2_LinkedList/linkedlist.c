@@ -17,32 +17,21 @@ typedef struct node{
 // You may create as many helper functions as you like.
 
 
+node_t* makeNode(int year, int wins, struct node* next){
+	node_t* p_aNode = (node_t*)malloc(sizeof(node_t));
+	p_aNode->year = year;
+	p_aNode->wins = wins;
+	p_aNode->next = next;
+	return p_aNode;
+}
+
+
 node_t* create_list(){
-	node_t* year2018 = malloc(sizeof(node_t));
-	node_t* year2017 = malloc(sizeof(node_t));
-	node_t* year2016 = malloc(sizeof(node_t));
-	node_t* year2015 = malloc(sizeof(node_t));
-	node_t* year2014 = malloc(sizeof(node_t));
-
-
-
-	year2018->year = 2018;
-	year2017->year = 2017;
-	year2016->year = 2016;
-	year2015->year = 2015;
-	year2014->year = 2014;
-
-	year2018->wins = 108;
-	year2017->wins = 93;
-	year2016->wins = 93;
-	year2015->wins = 78;
-	year2014->wins = 71;
-
-	year2018->next = year2017;
-	year2017->next = year2016;
-	year2016->next = year2015;
-	year2015->next = year2014;
-	year2014->next = NULL;
+	node_t* year2014 = makeNode(2014, 71, NULL);
+	node_t* year2015 = makeNode(2015, 78, year2014);
+	node_t* year2016 = makeNode(2016, 93, year2015);
+	node_t* year2017 = makeNode(2017, 93, year2016);
+	node_t* year2018 = makeNode(2018, 108, year2017);
 
 	return year2018;
 }
