@@ -138,8 +138,6 @@ int stack_dequeue(stack_t* s){
 	tmpNode = s->head;
 	s->head = s->head->next;
 
-	free(tmpNode);
-
 	s->count -= 1;
 	return item; // Note: This line is a 'filler' so the code compiles.
 }
@@ -153,20 +151,23 @@ void free_stack(stack_t* s){
 		return;
 	}
 	// First delete the node_t, then delete the stack.
-	if ( s->head != NULL){
+	node_t* nextNode;
+	while ( s->head != NULL){
+		nextNode = s->head->next;
 		free(s->head);
+		s->head = nextNode;
 	}
-	
 	free(s);
 }
 
-void printStack(stack_t* s){
-	node_t* itr = s->head;
-	while( itr != NULL){
-		printf("%d ", itr->data);
-		itr = itr->next;
-	}
-	printf("\n");
-}
+// Helper function
+//void printStack(stack_t* s){
+//	node_t* itr = s->head;
+//	while( itr != NULL){
+//		printf("%d ", itr->data);
+//		itr = itr->next;
+//	}
+//	printf("\n");
+//}
 
 #endif
