@@ -138,6 +138,7 @@ int stack_dequeue(stack_t* s){
 	tmpNode = s->head;
 	s->head = s->head->next;
 
+	free(tmpNode);
 	s->count -= 1;
 	return item; // Note: This line is a 'filler' so the code compiles.
 }
