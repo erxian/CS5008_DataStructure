@@ -34,7 +34,7 @@ Circular queues are used quite a bit in operating systems and high performance s
 
 # TODO: Put your answer here
 
-*My answer is ...*
+For Linear Queue, the front and tail index can only increase, the space after front item dequeued cannot be reused, so it will cause the waste of space. And when memory is finite the tail will touch the maximum index very soon, it will cause fake overflow. Circular queue can solve the above problem by override the data, to gurantee every piece of queue can be used. It can be designed for collecting logs.
 
 
 # Unit Tests
