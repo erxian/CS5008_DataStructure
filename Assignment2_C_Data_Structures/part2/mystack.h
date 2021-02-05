@@ -41,18 +41,19 @@ typedef struct stack{
 // (Think about what the means in terms of memory allocation)
 // The stacks fields should also be initialized to default values.
 stack_t* create_stack(unsigned int capacity){
-	// Modify the body of this function as needed.
-	if ( capacity > MAX_DEPTH ){
-		//printf("Stack Capacity exceed MAX_DEPTH\n");
-		exit(1);
-	}
 	// create myStack
 	stack_t* myStack = (stack_t*)malloc(sizeof(stack_t));
 	if ( myStack == NULL ){
 		return NULL;
 	}	
+	// Modify the body of this function as needed.
+	if ( capacity > MAX_DEPTH || capacity <= 0 ){
+		//printf("Set Stack Capacity to default MAX_DEPTH\n");
+		myStack->capacity = MAX_DEPTH;
+	} else {
+		myStack->capacity = capacity;
+	}		
 	myStack->count = 0;
-	myStack->capacity = capacity;
 	myStack->head = NULL;
 	
 	return myStack;
