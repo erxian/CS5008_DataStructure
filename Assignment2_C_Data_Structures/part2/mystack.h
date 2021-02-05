@@ -135,10 +135,10 @@ int stack_dequeue(stack_t* s){
 	}
 	int item = s->head->data;
 	node_t* tmpNode;
-	tmpNode = s->head;
-	s->head = s->head->next;
+	tmpNode = s->head->next;
+	free(s->head);
+	s->head = tmpNode;
 
-	free(tmpNode);
 	s->count -= 1;
 	return item; // Note: This line is a 'filler' so the code compiles.
 }
