@@ -44,8 +44,8 @@ void unitTest1(){
 }
 
 void unitTest2(){
-	stack_t* test2 = create_stack(-10);
-	stack_enqueue(test2,9);	
+	stack_t* test2 = create_stack(10);
+	//stack_enqueue(test2,9);	
 	printf("size of the stack: %d\n", test2->capacity);
 	printf("Removing: %d\n",stack_dequeue(test2));	
 	free_stack(test2);

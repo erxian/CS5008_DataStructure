@@ -59,6 +59,23 @@ stack_t* create_stack(unsigned int capacity){
 	return myStack;
 }
 
+// Free stack
+// Removes a stack and ALL of its elements from memory.
+// This should be called before the proram terminates.
+void free_stack(stack_t* s){
+	if ( s == NULL ){
+		return;
+	}
+	// First delete the node_t, then delete the stack.
+	node_t* nextNode;
+	while ( s->head != NULL){
+		nextNode = s->head->next;
+		free(s->head);
+		s->head = nextNode;
+	}
+	free(s);
+}
+
 // Stack Size
 // Queries the current size of a stack
 // A stack that has not been previously created will crash the program.
@@ -91,6 +108,7 @@ int stack_full(stack_t* s){
 	}
 	return 0;
 }
+
 
 // Enqueue a new item
 // i.e. push a new item into our data structure
@@ -127,6 +145,7 @@ int stack_dequeue(stack_t* s){
 	// check if stack is empty
 	if ( stack_empty(s) == 1 ){
 		//printf("Stack is empty\n");
+		free_stack(s);
 		exit(1);
 	}
 	// check if stack is underflow
@@ -145,22 +164,6 @@ int stack_dequeue(stack_t* s){
 }
 
 
-// Free stack
-// Removes a stack and ALL of its elements from memory.
-// This should be called before the proram terminates.
-void free_stack(stack_t* s){
-	if ( s == NULL ){
-		return;
-	}
-	// First delete the node_t, then delete the stack.
-	node_t* nextNode;
-	while ( s->head != NULL){
-		nextNode = s->head->next;
-		free(s->head);
-		s->head = nextNode;
-	}
-	free(s);
-}
 
 // Helper function
 //void printStack(stack_t* s){

@@ -43,6 +43,21 @@ queue_t* create_queue(unsigned int _capacity){
 	return myQueue;
 }
 
+// Free queue
+// Removes a queue and all of its elements from memory.
+// This should be called before the proram terminates.
+void free_queue(queue_t* q){
+	if ( q == NULL ){
+		return;
+	}
+	//First delete the data array, then delete the queue.
+	if ( q->data != NULL){
+		free(q->data);
+	}
+
+	free(q);
+}
+
 // Queue Size
 // Queries the current size of a queue
 // A queue that has not been previously created will crash the program.
@@ -77,6 +92,7 @@ int queue_full(queue_t* q){
 	}
 	return 0;
 }
+
 
 // Enqueue a new item
 // i.e. push a new item into our data structure
@@ -119,6 +135,7 @@ int queue_dequeue(queue_t* q){
 	// check if the queue is empty
 	if ( queue_empty(q) == 1 ){
 		//printf("The queue is empty\n");
+		free_queue(q);
 		exit(1);
 	}
 	int item = q->data[q->front];
@@ -141,20 +158,6 @@ int queue_dequeue(queue_t* q){
 	return item; // Note: This line is a filler so the code compiles.
 }
 
-// Free queue
-// Removes a queue and all of its elements from memory.
-// This should be called before the proram terminates.
-void free_queue(queue_t* q){
-	if ( q == NULL ){
-		return;
-	}
-	//First delete the data array, then delete the queue.
-	if ( q->data != NULL){
-		free(q->data);
-	}
-
-	free(q);
-}
 
 
 #endif

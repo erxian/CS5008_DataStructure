@@ -42,7 +42,7 @@ void unitTest2(){
 
 	queue_t* test2 = create_queue(3);
 	printf("Attempting to add %d\n",1);
-	queue_enqueue(test2,1);
+	//queue_enqueue(test2,1);
 	printf("Removing: %d\n",queue_dequeue(test2));	
 	
 	free_queue(test2);
