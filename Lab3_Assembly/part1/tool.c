@@ -10,7 +10,7 @@ int main(int argc, char** argv){
 	
 	FILE* file = fopen(argv[1], "r");
 	size_t len = 255;
-	char *line = malloc(sizeof(char) * len);
+	char* line = (char*)malloc(sizeof(char) * len);
 	// check if the file exists
 	if (file == NULL){
 		exit(1);
