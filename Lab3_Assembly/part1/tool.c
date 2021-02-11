@@ -5,9 +5,8 @@
 #include <ctype.h>
 
 int main(int argc, char** argv){
-
+	// use PUS to indicates PUSH, cause we only compare first 3 character
 	char *instruList[9] = {"ADD", "SUB", "MUL", "DIV", "MOV", "LEA", "PUS", "POP", "RET"}; 
-	//char *instruList[9] = {"add", "sub", "mul", "div", "mov", "lea", "pus", "pop", "ret"}; 
 	
 	FILE* file = fopen(argv[1], "r");
 	size_t len = 255;
@@ -20,7 +19,7 @@ int main(int argc, char** argv){
 	int total_instru = 0;
 	int total_cycles = 0;
 	// read file line by line
-	while(fgets(line, len, file) != NULL){;
+	while(fgets(line, len, file) != NULL){
 		int i = 0;
 		// find the first non space char index
 		while(line[i] == ' '){
@@ -56,6 +55,8 @@ int main(int argc, char** argv){
 	printf("total cycles: %d\n", total_cycles);
 	
 	free(line);
-	
+
+	fclose(file);
+
 	return 0;
 }
