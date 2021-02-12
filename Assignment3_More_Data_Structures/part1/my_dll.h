@@ -316,13 +316,13 @@ int dll_remove(dll_t* l, int pos){
 }
 
 // Helper function
-void printDll(dll_t* l){
-	node_t* itr = l->head;
-	while( itr != NULL){
-		printf("%d ", itr->data);
-		itr = itr->next;
-	}
-	printf("\n");
-}
+//void printDll(dll_t* l){
+//	node_t* itr = l->head;
+//	while( itr != NULL){
+//		printf("%d ", itr->data);
+//		itr = itr->next;
+//	}
+//	printf("\n");
+//}
 
 #endif
