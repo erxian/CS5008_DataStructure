@@ -19,6 +19,23 @@
 // ====================================================
 // ================== Program Entry ===================
 // ====================================================
+int unitTest4(){
+    int passed = 0;
+    dll_t* test = create_dll();
+    dll_push_back(test,142);
+    printDll(test);
+    dll_pop_back(test);
+    printDll(test);
+    if(0==dll_size(test)){
+       passed = 1;
+    }else{
+        passed = 0;
+    }
+    free_dll(test);
+
+    return passed;
+}
+
 
 int unitTest3(){
     int passed = 0;
@@ -72,7 +89,7 @@ int unitTest2(){
 int main(){
    // dll_t * dll = create_dll();
 //	int result = unitTest1();
-	int result = unitTest3();
+	int result = unitTest4();
 	printf("%d\n", result);
     
     

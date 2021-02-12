@@ -62,6 +62,7 @@ void free_dll(dll_t* t){
 		free(t->head);
 		t->head = nextNode;
 	}
+	
 	free(t);
 }
 
@@ -160,11 +161,16 @@ int dll_pop_front(dll_t* t){
 		return -1;
 	}
 	int item = t->head->data;
-	node_t* tmpNode;
-	tmpNode = t->head->next;
-	tmpNode->previous = NULL;
-	free(t->head);
-	t->head = tmpNode;
+	if ( t->head == t->tail ){
+		t->head = t->tail = NULL;
+		free(t->head);
+	} else {
+		node_t* tmpNode;
+		tmpNode = t->head->next;
+		tmpNode->previous = NULL;
+		free(t->head);
+		t->head = tmpNode;
+	}
 	t->count--;
 	return item;
 }
@@ -185,11 +191,18 @@ int dll_pop_back(dll_t* t){
 	if ( t->head == NULL ){
 		return -1;
 	}
+
 	int item = t->tail->data;
-	node_t* tmpNode;
-	tmpNode = t->tail->previous;
-	tmpNode->next = NULL;
-	free(t->tail);
+	if ( t->tail == t->head){
+		t->tail = t->head = NULL;
+		free(t->tail);
+	} else { 
+		node_t* tmpNode;
+		tmpNode = t->tail->previous;
+		tmpNode->next = NULL;
+		free(t->tail);
+		t->tail = tmpNode;
+	}
 	t->count--;
 	return item;
 }
@@ -235,10 +248,9 @@ int dll_insert(dll_t* l, int pos, int item){
 		preNode->next = newNode;
 		currentNode->previous = newNode;
 	}
-
-	//l->count++;	
-
 	return 1;
+
+	//l->count++;
 }
 // Returns the item at position pos starting at 0 ( 0 being the first item )
 //  (does not remove the item)
@@ -296,6 +308,7 @@ int dll_remove(dll_t* l, int pos){
 		node_t* nextNode = currentNode->next;
 		preNode->next = nextNode;
 		nextNode->previous = preNode;
+		free(currentNode);
 	}
 
 	l->count--;
