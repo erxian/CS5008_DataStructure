@@ -109,11 +109,8 @@ int dll_push_front(dll_t* l, int item){
 		l->head->previous = newNode;
 		l->head = newNode;
 	}
-
 	l->count++;
-
 	return 1;
-	// tail will not change	
 }
 
 // push a new item to the end of the DLL (after the last node in the list).
@@ -138,9 +135,7 @@ int dll_push_back(dll_t* l, int item){
 		l->tail->next = newNode;
 		l->tail = newNode;
 	}
-
 	l->count++;
-
 	return 1;
 }
 
@@ -187,7 +182,7 @@ int dll_pop_back(dll_t* t){
 	if ( dll_empty(t)){
 		return 0; // Note: This line is a 'filler' so the code compiles.
 	}
-	if ( t->head == NULL ){
+	if ( t->tail == NULL ){
 		return -1;
 	}
 
