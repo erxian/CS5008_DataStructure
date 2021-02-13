@@ -23,9 +23,9 @@ int unitTest4(){
     int passed = 0;
     dll_t* test = create_dll();
     dll_push_back(test,142);
-    printDll(test);
+//    printDll(test);
     dll_pop_back(test);
-    printDll(test);
+ //   printDll(test);
     if(0==dll_size(test)){
        passed = 1;
     }else{
@@ -66,20 +66,20 @@ int unitTest2(){
     dll_push_back(test, 222);
     printf("get size %d\n", dll_size(test));
     dll_insert(test, 0, 444);
+    dll_remove(test, 0);
     printf("get size %d\n", dll_size(test));
-    dll_insert(test, 0, 777);
+    printf("get number %d\n", dll_get(test, 3));
+    printf("pop back %d\n", dll_pop_back(test));
+    printf("pop back %d\n", dll_pop_back(test));
+    printf("pop back %d\n", dll_pop_back(test));
+    printf("pop front %d\n", dll_pop_front(test));
     printf("get size %d\n", dll_size(test));
-    //printf("get number %d\n", dll_get(test, 3));
-    //printf("pop back %d\n", dll_pop_back(test));
-    //printf("pop front %d\n", dll_pop_front(test));
-    dll_remove(test, 3);
-    printf("get size %d\n", dll_size(test));
-    if(4==dll_size(test)){
+    if(0==dll_size(test)){
        passed = 1;
     }else{
         passed = 0;
     }
-    printDll(test);
+   // printDll(test);
 
     free_dll(test);
 
@@ -89,8 +89,12 @@ int unitTest2(){
 int main(){
    // dll_t * dll = create_dll();
 //	int result = unitTest1();
-	int result = unitTest4();
-	printf("%d\n", result);
+	int result4 = unitTest4();
+	int result3 = unitTest3();
+	int result2 = unitTest2();
+	printf("%d\n", result4);
+	printf("%d\n", result3);
+	printf("%d\n", result2);
     
     
     
