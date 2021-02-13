@@ -59,22 +59,18 @@ int unitTest2(){
     printf("get size %d\n", dll_size(test));
     dll_push_front(test,555);
     printf("get size %d\n", dll_size(test));
-    dll_push_front(test,666);
+    dll_push_back(test,666);
     printf("get size %d\n", dll_size(test));
     dll_push_front(test, 111);
     printf("get size %d\n", dll_size(test));
     dll_push_back(test, 222);
     printf("get size %d\n", dll_size(test));
-    dll_insert(test, 0, 444);
+    printf("-------------\n");
     dll_remove(test, 0);
     printf("get size %d\n", dll_size(test));
-    printf("get number %d\n", dll_get(test, 3));
-    printf("pop back %d\n", dll_pop_back(test));
-    printf("pop back %d\n", dll_pop_back(test));
-    printf("pop back %d\n", dll_pop_back(test));
-    printf("pop front %d\n", dll_pop_front(test));
+    dll_remove(test, 3);
     printf("get size %d\n", dll_size(test));
-    if(0==dll_size(test)){
+    if(3==dll_size(test)){
        passed = 1;
     }else{
         passed = 0;

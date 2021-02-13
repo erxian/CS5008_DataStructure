@@ -242,6 +242,7 @@ int dll_insert(dll_t* l, int pos, int item){
 
 		preNode->next = newNode;
 		currentNode->previous = newNode;
+		l->count++;
 	}
 	return 1;
 }
@@ -306,9 +307,9 @@ int dll_remove(dll_t* l, int pos){
 		preNode->next = nextNode;
 		nextNode->previous = preNode;
 		free(currentNode);
+		l->count--;
 	}
 
-	l->count--;
 	return 1;
 }
 
