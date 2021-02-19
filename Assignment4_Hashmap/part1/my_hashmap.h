@@ -225,6 +225,9 @@ void hashmap_removeKey(hashmap_t* _hashmap, char* key){
 		}
 		prenode->next = iter->next;
 	}
+	free(iter->kv->key);
+	free(iter->kv->value);
+	free(iter->kv);
 	free(iter);
 }
 
