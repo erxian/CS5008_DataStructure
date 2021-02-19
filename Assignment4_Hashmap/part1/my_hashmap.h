@@ -46,7 +46,6 @@ typedef struct hashmap{
     node_t** arrayOfLists;  // An array of linked lists for our buckets
                             // Read another way
                             //      - an array of node_t*
-
     // A function pointer to a hash function
     // The hash_function must take in a 'char*' as a key, and have a
     // second parameter specifying the number of buckets.
@@ -63,9 +62,6 @@ hashmap_t* hashmap_create(unsigned int _buckets){
 		return NULL;
 	}
     // Set the number of buckets
-	if (_buckets < 1) {
-		return NULL;
-	}
 	map->buckets = _buckets;
     // Allocate memory for array lists
 	map->arrayOfLists = (node_t**)malloc(sizeof(node_t*) * _buckets);
@@ -89,18 +85,21 @@ hashmap_t* hashmap_create(unsigned int _buckets){
 // Responsibility to free a hashmap that has been previously allocated.  // Must also free all of the chains in the hashmap
 // This function should run in O(n) time
 void hashmap_delete(hashmap_t* _hashmap){
-	if (_hashmap != NULL) {
+	if (_hashmap == NULL) {
 		return;	
 	}
 	int i;
 	for (i=0; i < _hashmap->buckets; i++) {
+		if (_hashmap->arrayOfLists == NULL) {
+			return;
+		}
 		node_t* nextNode;
 		node_t* iter = _hashmap->arrayOfLists[i];
 		while (iter != NULL) {
 			nextNode = iter->next;
-			// free the key 
+			// free the char* key 
 			free(iter->kv->key);
-			// free the value
+			// free the char* value
 			free(iter->kv->value);
 			// free the pair_t*
 			free(iter->kv);
@@ -109,7 +108,7 @@ void hashmap_delete(hashmap_t* _hashmap){
 			iter = nextNode;
 		}
 	}
-	// free the node_t**
+	// free the node_t** arrayOfLists
 	free(_hashmap->arrayOfLists);
 	// free the hashmap
 	free(_hashmap);	
@@ -152,11 +151,15 @@ void hashmap_insert(hashmap_t* _hashmap, char* key, char* value){
 		return;
 	} 
 	pair_t* newpair = (pair_t*)malloc(sizeof(pair_t));
+	if (newpair == NULL) {
+		return;
+	}
 	newpair->key = (char*)malloc(strlen(key)*sizeof(char)+1);
 	newpair->value = (char*)malloc(strlen(value)*sizeof(char)+1);
 	if (newpair->key == NULL || newpair->value == NULL) {
 		return;
-	} // copy the string to key strcpy(newpair->key, key);
+	}
+       	// copy the string to key strcpy(newpair->key, key);
 	strcpy(newpair->value, value);
 	strcpy(newpair->key, key);
 	// create new node	
@@ -175,7 +178,7 @@ void hashmap_insert(hashmap_t* _hashmap, char* key, char* value){
 		//insert our first node to the empty bucket
 		_hashmap->arrayOfLists[bucket] = newnode;
 	} else {
-		//insert the node from the chain front
+		//insert the node from the head of the list 
 		newnode->next = _hashmap->arrayOfLists[bucket];
 		_hashmap->arrayOfLists[bucket] = newnode;
 	}
@@ -235,14 +238,6 @@ void hashmap_removeKey(hashmap_t* _hashmap, char* key){
 	free(iter->kv->value);
 	free(iter->kv);
 	free(iter);
-	// if the bucket has only one node.
-	if (_hashmap->arrayOfLists == NULL) {
-		free(_hashmap->arrayOfLists);
-	}
-	// if the hashmap has only one node.
-	if (_hashmap == NULL) {
-		free(_hashmap);
-	}	
 }
 
 // Update a key with a new Value
