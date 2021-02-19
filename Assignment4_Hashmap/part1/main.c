@@ -6,7 +6,15 @@ int unitTest(){
     hashmap_t* myHashmap = hashmap_create(5); 
     // Insert a first key/value pair
     hashmap_insert(myHashmap,"pig", "a farm animal");
-    printf("pig was added should be 1: %d\n",hashmap_hasKey(myHashmap,"pig"));
+    //printf("pig was added should be 1: %d\n",hashmap_hasKey(myHashmap,"pig"));
+    hashmap_insert(myHashmap,"cat", "a fat pet");
+    hashmap_insert(myHashmap,"mmm", "a mmmm pet");
+    hashmap_insert(myHashmap,"qqq", "a qqq pet");
+    hashmap_printKeys(myHashmap);
+    //printf("cat's value is %s\n",hashmap_getValue(myHashmap, "cat"));
+    hashmap_removeKey(myHashmap,"mmm");
+    printf("mmm was added should be 0: %d\n",hashmap_hasKey(myHashmap,"mmm"));
+    printf("cat was added should be 1: %d\n",hashmap_hasKey(myHashmap,"cat"));
     hashmap_printKeys(myHashmap);
 }
 

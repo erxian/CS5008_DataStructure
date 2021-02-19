@@ -107,7 +107,7 @@ int hashmap_hasKey(hashmap_t* _hashmap, char* key){
 	unsigned int bucket = _hashmap->hashFunction(key, _hashmap->buckets);
 	node_t* iter = _hashmap->arrayOfLists[bucket];
 	while (iter != NULL) {
-		if (strcmp(iter->kv->key,key) == 0) {
+		if (strcmp(iter->kv->key, key) == 0) {
 			return 1;
 		}
 		iter = iter->next;
@@ -125,8 +125,10 @@ int hashmap_hasKey(hashmap_t* _hashmap, char* key){
 //      - You should malloc the key/value in this function
 // This function should run in average-case constant time
 void hashmap_insert(hashmap_t* _hashmap, char* key, char* value){
-   
 	// if a key exists
+	if (hashmap_hasKey(_hashmap, key) == 1) {
+		return;
+	} 
 	pair_t* newpair = (pair_t*)malloc(sizeof(pair_t));
 	newpair->key = (char*)malloc(strlen(key)*sizeof(char)+1);
 	newpair->value = (char*)malloc(strlen(value)*sizeof(char)+1);
@@ -165,7 +167,25 @@ void hashmap_insert(hashmap_t* _hashmap, char* key, char* value){
 //  - Search the _hashmap's bucket for the key and return the value
 // This function should run in average-case constant time
 char* hashmap_getValue(hashmap_t* _hashmap, char* key){
-	//TODO
+	if (_hashmap == NULL) {
+		return NULL;
+	}
+	if (hashmap_hasKey(_hashmap, key) == 0) {
+		return NULL;
+	}
+	unsigned int bucket = _hashmap->hashFunction(key, _hashmap->buckets);
+	node_t* iter = _hashmap->arrayOfLists[bucket];
+	/*
+	while (iter != NULL) {
+		if (strcmp(iter->kv->key, key) == 0) {
+			return iter->kv->value;
+		}
+		iter = iter->next;
+	} */
+	while (strcmp(iter->kv->key, key) != 0) {
+		iter = iter->next;
+	}
+	return iter->kv->value;
 }
 
 // TODO NOTE THAT I DID NOT FINISH REMOVE KEY BECAUSE...
@@ -176,7 +196,28 @@ char* hashmap_getValue(hashmap_t* _hashmap, char* key){
 //  - Search the _hashmap's bucket for the key and then remove it
 // This function should run in average-case constant time
 void hashmap_removeKey(hashmap_t* _hashmap, char* key){
-	//TODO
+	if (_hashmap == NULL) {
+		return;
+	}
+	if (hashmap_hasKey(_hashmap, key) == 0) {
+		return;
+	}
+	unsigned int bucket = _hashmap->hashFunction(key, _hashmap->buckets);
+	node_t* iter = _hashmap->arrayOfLists[bucket];
+	// if the head node itself holds the key to be removed
+	if (strcmp(iter->kv->key, key) == 0) {
+		_hashmap->arrayOfLists[bucket] = iter->next;			
+	} else {
+		node_t* prenode;
+		while (strcmp(iter->kv->key, key) != 0) {
+		// the key in the middle or tail of chain
+			prenode = iter;
+			iter = iter->next;
+		}
+		prenode->next = iter->next;
+	}
+	free(iter);
+	return;
 }
 
 // Update a key with a new Value
@@ -186,7 +227,7 @@ void hashmap_removeKey(hashmap_t* _hashmap, char* key){
 //  - Updates the value of the key to the new value
 // This function should run in average-case constant time
 void hashmap_update(hashmap_t* _hashmap, char* key, char* newValue){
-	//TODO
+		
 }
 
 // Prints all of the keys in a hashmap
