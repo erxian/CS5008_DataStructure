@@ -9,9 +9,9 @@ Discuss and answer the following questions (Make sure to elaborate and justify y
 
 ## Answers:
 
-1. *edit your answer here for Part 2 question 1*
-2. *edit your answer here for Part 2 question 1*
-3. *edit your answer here for Part 2 question 1*
-4. *edit your answer here for Part 2 question 1*
+1. tolerable but not the best practice. We're getting constant time when insert, but we got O(n) when getValue(), hasKey() and update() and remove() under worsest situation. And chaining hash has additional memory cost to store the structure of linked-lists.
+2. using two Hash function, one used for find the buckets and the other one used to find the value.
+3. O(n)
+4. open addressing is a method for handling collisions. In Open Addressing, all elements are stored in the hash table itself.
 
 
