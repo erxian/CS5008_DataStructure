@@ -98,12 +98,17 @@ void hashmap_delete(hashmap_t* _hashmap){
 		node_t* iter = _hashmap->arrayOfLists[i];
 		while (iter != NULL) {
 			nextNode = iter->next;
+			// free the key 
 			free(iter->kv->key);
+			// free the value
 			free(iter->kv->value);
+			// free the pair_t*
 			free(iter->kv);
+			// free the node_t*
 			free(iter);
 			iter = nextNode;
 		}
+		// free the node_t**
 		free(_hashmap->arrayOfLists[i]);
 	}
 	free(_hashmap);	
@@ -229,6 +234,12 @@ void hashmap_removeKey(hashmap_t* _hashmap, char* key){
 	free(iter->kv->value);
 	free(iter->kv);
 	free(iter);
+	if (_hashmap->arrayOfLists[bucket] == NULL) {
+		free(_hashmap->arrayOfLists[bucket]);
+	}
+	if (_hashmap == NULL) {
+		free(_hashmap);
+	}	
 }
 
 // Update a key with a new Value
@@ -249,7 +260,12 @@ void hashmap_update(hashmap_t* _hashmap, char* key, char* newValue){
 	while (strcmp(iter->kv->key, key) != 0) {
 		iter = iter->next;
 	}
-	iter->kv->value = newValue;
+	free(iter->kv->value);
+	iter->kv->value = (char*)malloc(strlen(newValue)*sizeof(char)+1);
+	if (iter->kv->value == NULL) {
+		return;
+	}
+	strcpy(iter->kv->value, newValue);
 }
 
 // Prints all of the keys in a hashmap
@@ -268,8 +284,7 @@ void hashmap_printKeys(hashmap_t* _hashmap){
 		while (iter != NULL) {
 			printf("\tKey=%s\tValues=%s\n", iter->kv->key, iter->kv->value);
 			iter = iter->next;
-		}
-
+		} 
 	}
 }
 
