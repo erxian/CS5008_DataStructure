@@ -58,24 +58,35 @@ typedef struct hashmap{
 // Initializes the capacity(i.e. number of buckets)
 hashmap_t* hashmap_create(unsigned int _buckets){
     // Allocate memory for our hashmap
-	//TODO
+	hashmap_t* map = (hashmap_t*)malloc(sizeof(hashmap_t));
+	if (map == NULL) {
+		return NULL;
+	}
     // Set the number of buckets
-	//TODO
+	map->buckets = _buckets;
+    // Allocate memory for array lists
+	map->arrayOfLists = (node_t**)malloc(sizeof(node_t*) * _buckets);
+	if (map->arrayOfLists == NULL) {
+		return NULL;
+	}
     // Initialize our array of lists for each bucket
-	//TODO
+	int i;
+	for (i=0; i < _buckets; i++) {
+		map->arrayOfLists[i] = NULL;
+	}	
     // Setup our hashFunction to point to our
     // stringHash function.
+	map->hashFunction = stringHash;
 	//TODO
     // Return the new map that we have created
-    return NULL;
+    return map;
 }
 
 // Frees a hashmap
-// Responsibility to free a hashmap that has been previously allocated.
-// Must also free all of the chains in the hashmap
+// Responsibility to free a hashmap that has been previously allocated.  // Must also free all of the chains in the hashmap
 // This function should run in O(n) time
 void hashmap_delete(hashmap_t* _hashmap){
-    if(_hashmap != NULL){
+    if (_hashmap != NULL) {
 	//TODO
     }
 }
@@ -90,8 +101,21 @@ void hashmap_delete(hashmap_t* _hashmap){
 //  - Search that bucket to see if the key exists.
 // This function should run in average-case constant time
 int hashmap_hasKey(hashmap_t* _hashmap, char* key){
-	//TODO
+	if (_hashmap == NULL) {
+		return -9999;
+	}
+	unsigned int bucket = _hashmap->hashFunction(key, _hashmap->buckets);
+	node_t* iter = _hashmap->arrayOfLists[bucket];
+	while (iter != NULL) {
+		if (strcmp(iter->kv->key,key) == 0) {
+			return 1;
+		}
+		iter = iter->next;
+	}
+	return 0;
 }
+
+
 
 // Insert a new key/value pair into a hashmap
 // The algorithm is:
@@ -100,8 +124,37 @@ int hashmap_hasKey(hashmap_t* _hashmap, char* key){
 //  - Store the key/value pair at the end of the buckets chain
 //      - You should malloc the key/value in this function
 // This function should run in average-case constant time
-void hashmap_insert(hashmap_t* _hashmap,char* key,char* value){
-    // TODO
+void hashmap_insert(hashmap_t* _hashmap, char* key, char* value){
+   
+	// if a key exists
+	pair_t* newpair = (pair_t*)malloc(sizeof(pair_t));
+	newpair->key = (char*)malloc(strlen(key)*sizeof(char)+1);
+	newpair->value = (char*)malloc(strlen(value)*sizeof(char)+1);
+	if (newpair->key == NULL || newpair->value == NULL) {
+		return;
+	} // copy the string to key strcpy(newpair->key, key);
+	strcpy(newpair->value, value);
+	strcpy(newpair->key, key);
+	// create new node	
+	node_t* newnode = (node_t*)malloc(sizeof(node_t));
+	if (newnode == NULL) {
+		return;
+	}
+	newnode->next = NULL;
+	newnode->kv = newpair; 
+	
+	// find the buckets to put the key/value pair in
+	unsigned int bucket = _hashmap->hashFunction(key, _hashmap->buckets);
+	// create an iterator and set it to the target bucket
+	node_t* iter = _hashmap->arrayOfLists[bucket];
+	if (iter == NULL) {
+		//insert our first node to the empty bucket
+		_hashmap->arrayOfLists[bucket] = newnode;
+	} else {
+		//insert the node from the chain front
+		newnode->next = _hashmap->arrayOfLists[bucket];
+		_hashmap->arrayOfLists[bucket] = newnode;
+	}
 }
 
 // Return a value from a key 
@@ -141,7 +194,20 @@ void hashmap_update(hashmap_t* _hashmap, char* key, char* newValue){
 //  - Iterate through every bucket and print out the keys
 // This function should run in O(n) time
 void hashmap_printKeys(hashmap_t* _hashmap){
-	//TODO
+	if (_hashmap == NULL) {
+		return;
+	}
+	//iterate through all of buckets
+	int i;
+	for (i=0; i < _hashmap->buckets; i++) {
+		printf("Bucket# %d\n", i);
+		node_t* iter = _hashmap->arrayOfLists[i];
+		while (iter != NULL) {
+			printf("\tKey=%s\tValues=%s\n", iter->kv->key, iter->kv->value);
+			iter = iter->next;
+		}
+
+	}
 }
 
 #endif

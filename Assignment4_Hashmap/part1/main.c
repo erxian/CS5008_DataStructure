@@ -1,6 +1,14 @@
 #include <stdio.h>
 #include "my_hashmap.h"
 
+int unitTest(){
+    // Create our hashmap
+    hashmap_t* myHashmap = hashmap_create(5); 
+    // Insert a first key/value pair
+    hashmap_insert(myHashmap,"pig", "a farm animal");
+    printf("pig was added should be 1: %d\n",hashmap_hasKey(myHashmap,"pig"));
+    hashmap_printKeys(myHashmap);
+}
 
 int unitTest1(){
     // Create our hashmap
@@ -44,11 +52,11 @@ int unitTest2(){
 
 }
 int main(){
-
-    printf("============ unitTest1() ================\n");
-    unitTest1();
-    printf("============ unitTest2() ================\n");
-    unitTest2();
+    unitTest();
+    //printf("============ unitTest1() ================\n");
+    //unitTest1();
+    //printf("============ unitTest2() ================\n");
+    //unitTest2();
     
     return 0;
 }
