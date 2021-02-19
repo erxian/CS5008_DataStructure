@@ -7,19 +7,17 @@ int unitTest(){
     // Insert a first key/value pair
     hashmap_insert(myHashmap,"pig", "a farm animal");
     //printf("pig was added should be 1: %d\n",hashmap_hasKey(myHashmap,"pig"));
-    hashmap_insert(myHashmap,"cat", "a fat pet");
-    hashmap_insert(myHashmap,"mmm", "a mmmm pet");
-    hashmap_insert(myHashmap,"qqq", "a qqq pet");
+    //hashmap_insert(myHashmap,"cat", "a fat pet");
+    //hashmap_insert(myHashmap,"mmm", "a mmmm pet");
+    //hashmap_insert(myHashmap,"qqq", "a qqq pet");
     //hashmap_printKeys(myHashmap);
     //printf("cat's value is %s\n",hashmap_getValue(myHashmap, "cat"));
-    hashmap_removeKey(myHashmap,"mmm");
+    //hashmap_removeKey(myHashmap,"mmm");
     //printf("mmm was added should be 0: %d\n",hashmap_hasKey(myHashmap,"mmm"));
     //printf("cat was added should be 1: %d\n",hashmap_hasKey(myHashmap,"cat"));
-    hashmap_update(myHashmap,"pig","a really cool farm animal");    
+    //hashmap_update(myHashmap,"pig","a really cool farm animal");    
     //hashmap_printKeys(myHashmap);
     hashmap_delete(myHashmap);
-    hashmap_printKeys(myHashmap);
-    
 }
 
 int unitTest1(){
@@ -65,10 +63,10 @@ int unitTest2(){
 }
 int main(){
     unitTest();
-    printf("============ unitTest1() ================\n");
-    unitTest1();
-    printf("============ unitTest2() ================\n");
-    unitTest2();
+    //printf("============ unitTest1() ================\n");
+    //unitTest1();
+    //printf("============ unitTest2() ================\n");
+    //unitTest2();
     
     return 0;
 }

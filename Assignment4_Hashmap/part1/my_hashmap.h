@@ -108,9 +108,10 @@ void hashmap_delete(hashmap_t* _hashmap){
 			free(iter);
 			iter = nextNode;
 		}
-		// free the node_t**
-		free(_hashmap->arrayOfLists[i]);
 	}
+	// free the node_t**
+	free(_hashmap->arrayOfLists);
+	// free the hashmap
 	free(_hashmap);	
 }
 
@@ -234,9 +235,11 @@ void hashmap_removeKey(hashmap_t* _hashmap, char* key){
 	free(iter->kv->value);
 	free(iter->kv);
 	free(iter);
-	if (_hashmap->arrayOfLists[bucket] == NULL) {
-		free(_hashmap->arrayOfLists[bucket]);
+	// if the bucket has only one node.
+	if (_hashmap->arrayOfLists == NULL) {
+		free(_hashmap->arrayOfLists);
 	}
+	// if the hashmap has only one node.
 	if (_hashmap == NULL) {
 		free(_hashmap);
 	}	
