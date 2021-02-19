@@ -13,8 +13,9 @@ int unitTest(){
     hashmap_printKeys(myHashmap);
     //printf("cat's value is %s\n",hashmap_getValue(myHashmap, "cat"));
     hashmap_removeKey(myHashmap,"mmm");
-    printf("mmm was added should be 0: %d\n",hashmap_hasKey(myHashmap,"mmm"));
-    printf("cat was added should be 1: %d\n",hashmap_hasKey(myHashmap,"cat"));
+    //printf("mmm was added should be 0: %d\n",hashmap_hasKey(myHashmap,"mmm"));
+    //printf("cat was added should be 1: %d\n",hashmap_hasKey(myHashmap,"cat"));
+    hashmap_update(myHashmap,"pig","a really cool farm animal");    
     hashmap_printKeys(myHashmap);
 }
 

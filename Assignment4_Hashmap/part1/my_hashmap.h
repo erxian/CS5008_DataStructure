@@ -63,6 +63,9 @@ hashmap_t* hashmap_create(unsigned int _buckets){
 		return NULL;
 	}
     // Set the number of buckets
+	if (_buckets < 1) {
+		return NULL;
+	}
 	map->buckets = _buckets;
     // Allocate memory for array lists
 	map->arrayOfLists = (node_t**)malloc(sizeof(node_t*) * _buckets);
@@ -114,8 +117,6 @@ int hashmap_hasKey(hashmap_t* _hashmap, char* key){
 	}
 	return 0;
 }
-
-
 
 // Insert a new key/value pair into a hashmap
 // The algorithm is:
@@ -175,13 +176,6 @@ char* hashmap_getValue(hashmap_t* _hashmap, char* key){
 	}
 	unsigned int bucket = _hashmap->hashFunction(key, _hashmap->buckets);
 	node_t* iter = _hashmap->arrayOfLists[bucket];
-	/*
-	while (iter != NULL) {
-		if (strcmp(iter->kv->key, key) == 0) {
-			return iter->kv->value;
-		}
-		iter = iter->next;
-	} */
 	while (strcmp(iter->kv->key, key) != 0) {
 		iter = iter->next;
 	}
@@ -217,7 +211,6 @@ void hashmap_removeKey(hashmap_t* _hashmap, char* key){
 		prenode->next = iter->next;
 	}
 	free(iter);
-	return;
 }
 
 // Update a key with a new Value
@@ -227,7 +220,18 @@ void hashmap_removeKey(hashmap_t* _hashmap, char* key){
 //  - Updates the value of the key to the new value
 // This function should run in average-case constant time
 void hashmap_update(hashmap_t* _hashmap, char* key, char* newValue){
-		
+	if (_hashmap == NULL) {
+		return;
+	}
+	if (hashmap_hasKey(_hashmap, key) == 0) {
+		return;
+	}
+	unsigned int bucket = _hashmap->hashFunction(key, _hashmap->buckets);
+	node_t* iter = _hashmap->arrayOfLists[bucket];
+	while (strcmp(iter->kv->key, key) != 0) {
+		iter = iter->next;
+	}
+	iter->kv->value = newValue;
 }
 
 // Prints all of the keys in a hashmap
