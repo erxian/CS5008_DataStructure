@@ -89,9 +89,24 @@ hashmap_t* hashmap_create(unsigned int _buckets){
 // Responsibility to free a hashmap that has been previously allocated.  // Must also free all of the chains in the hashmap
 // This function should run in O(n) time
 void hashmap_delete(hashmap_t* _hashmap){
-    if (_hashmap != NULL) {
-	//TODO
-    }
+	if (_hashmap != NULL) {
+		return;	
+	}
+	int i;
+	for (i=0; i < _hashmap->buckets; i++) {
+		node_t* nextNode;
+		node_t* iter = _hashmap->arrayOfLists[i];
+		while (iter != NULL) {
+			nextNode = iter->next;
+			free(iter->kv->key);
+			free(iter->kv->value);
+			free(iter->kv);
+			free(iter);
+			iter = nextNode;
+		}
+		free(_hashmap->arrayOfLists[i]);
+	}
+	free(_hashmap);	
 }
 
 // Returns a boolean value if a key has been put into
