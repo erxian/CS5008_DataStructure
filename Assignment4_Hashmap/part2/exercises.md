@@ -9,9 +9,9 @@ Discuss and answer the following questions (Make sure to elaborate and justify y
 
 ## Answers:
 
-1. tolerable but not the best practice. We're getting constant time when insert, but we got O(n) when getValue(), hasKey() and update() and remove() under worsest situation. And chaining hash has additional memory cost to store the structure of linked-lists.
-2. using two Hash function, one used for find the buckets and the other one used to find the value.
-3. O(n)
-4. open addressing is a method for handling collisions. In Open Addressing, all elements are stored in the hash table itself.
+1. tolerable but not the best practice. In real world, we need avoid collision as possible, making kv pairs evenly distributed in the hash table. if we have non-prime buckets capacity, it could entails heavily collisons since the highest common factor of strlen(key) and numberOfBuckets is not 1. We're getting constant time when insert, but will have a worst-case access time of O(n) when getValue(), hasKey() and update() and remove(). 
+2. It's better to using an universal hashing function, HASHa,b(key) = ((a*key + b) mod p) mod m, p is a large enough prime number so that every possible keyword key falls within the range of 0 to p-1. m is the number of buckets in the hash table. The range of a, b are a∈{1,2,3,...,p-1}, b∈{0,1,2,...,p-1}.
+3.  O(n)
+4.  Open addressing is another method for handling collisions instead of using chaining. In Open Addressing, all elements are stored in the hash table itself. There are 3 types of openning address: Linear Probing, Quadratic Probing and Double Hashing. 
 
 
