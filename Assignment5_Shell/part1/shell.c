@@ -10,6 +10,7 @@
 #include <string.h>
 #include <sys/wait.h>
 #include <sys/types.h>
+#include <signal.h>
 
 #define MAX_BUFFER_SIZE 80
 
@@ -22,7 +23,6 @@ char* add_to_history(char* str) {
 		historyCommands[count] = tempStr;
 		count++;
 	}
-	//free(tempStr);
 	return tempStr;
 }
 
@@ -97,6 +97,10 @@ int execute_builtin(char** args) {
   return 1;
 }
 
+void sigint_handler(int signo) {
+	printf("mini-shell terminated\n");
+	exit(0);
+}
 
 // function for finding pipe 
 int isPipe(char* str, char** strpiped) 
@@ -138,6 +142,7 @@ void executeCommand(char** parsed)
         printf("\nFailed forking child.."); 
         return; 
     } else if (pid == 0) { 
+	signal(SIGINT, SIG_DFL);
         if (execvp(parsed[0], parsed) < 0) { 
             printf("\nCommand not found--Did you mean something else?.\n"); 
         }
@@ -166,6 +171,7 @@ void executePipeCommand(char** parsed, char** parsedpipe) {
     } 
   
     if (p1 == 0) { 
+	signal(SIGINT, SIG_DFL);
         // Child 1 executing.. 
         // It only needs to write at the write end 
         dup2(pipefd[1], STDOUT_FILENO); 
@@ -185,7 +191,8 @@ void executePipeCommand(char** parsed, char** parsedpipe) {
             return; 
         } 
         // Child 2 executing.. 
-        if (p2 == 0) { 
+        if (p2 == 0) {
+	    signal(SIGINT, SIG_DFL); 
             dup2(pipefd[0], STDIN_FILENO); 
             close(pipefd[1]); 
             close(pipefd[0]); 
@@ -235,6 +242,8 @@ int main() {
 	char* parsedArgsPiped[MAX_BUFFER_SIZE];
 	int status;
 	char* tempstring;
+        
+	signal(SIGINT, sigint_handler);
 	 // A loop that runs forever.
 	do {
     		printf("mini-shell> ");
