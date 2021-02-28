@@ -116,10 +116,11 @@ history command stores all of the previous commands a user has typed in and prin
 
 NOTES:
 
-*Enter two or three sentences (minimum) in how you implemented the built-in command.*
-Fisrt, check if input string is blank and check string's size. If the input string is valid, then parse it to commands.
-Second, insert commands to the back of historyCommands[] array, filter history command itself.
-Thrid, if user enter history, call builtin_history() function to print all previous commands and return 1.
+1. check if input string is blank and check string's size. If the input string is valid, then parse it to commands.
+
+2. insert commands to the back of historyCommands[] array, filter history command itself.
+
+3. if user enter history, call builtin_history() function to print all previous commands and return 1.
 
 -----------------------------------------------------
 
