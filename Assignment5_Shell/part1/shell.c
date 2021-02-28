@@ -14,7 +14,7 @@
 
 #define MAX_BUFFER_SIZE 80 
 
-char* historyCommands[10];
+char* historyCommands[5];
 
 int count = 0; // count history commands number
 char* add_to_history(char* str) {
@@ -84,12 +84,10 @@ int builtin_exit(char **args)
 
 int execute_builtin(char** args) {
 	int i;
-	
 	if (args[0] == NULL) {
 	  // An empty command was entered.
 		return 1;
 	}
-
 	for (i = 0; i < count_builtins(); i++) {
 		if (strcmp(args[0], builtin_str[i]) == 0) {
 			return (*builtin_func[i])(args);
@@ -136,15 +134,13 @@ void executePipeCommand(char** parsed, char** parsedpipe) {
         	printf("\nPipe could not be initialized"); 
         	return; 
     	} 
-    	p1 = fork(); 
+    	p1 = fork(); // Parent executing
     	if (p1 < 0) { 
         	printf("\nCould not fork"); 
         	return; 
     	} 
-  
     	if (p1 == 0) { 
         	// Child 1 executing.. 
-        	// It only needs to write at the write end 
         	dup2(pipefd[1], STDOUT_FILENO); 
         	close(pipefd[0]); 
         	close(pipefd[1]); 
@@ -154,9 +150,7 @@ void executePipeCommand(char** parsed, char** parsedpipe) {
         	} 
         	exit(0); 
     	} else { 
-        	// Parent executing 
-        	p2 = fork(); 
-  
+        	p2 = fork(); // Parent executing 
         	if (p2 < 0) { 
             		printf("\nCould not fork"); 
             	return; 
@@ -219,7 +213,8 @@ int input_handler(char* str, char** parsed, char** parsedpipe)
     	int piped = 0; 
     	piped = isPipe(str, strpiped); 
     	if (piped) { 
-		// if the 
+		// if the pipe command is not [command] | [command] format
+		// return 1 
         	if(!(splitCommand(strpiped[0], parsed) && 
 			splitCommand(strpiped[1], parsedpipe))) { 
 		printf("Pipe command is not valid format\n");
@@ -235,6 +230,7 @@ int input_handler(char* str, char** parsed, char** parsedpipe)
     	int i; 
     	for (i = 0; i < count_builtins(); i++) {
 		if (strcmp(parsed[0], builtin_str[i]) == 0) {
+			// if the parsed is builtin command, call builtin function
             		// return 0 means exit, 1 means cd or help 
             		return (*builtin_func[i])(parsed); 
         	} 
