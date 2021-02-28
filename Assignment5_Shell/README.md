@@ -1,13 +1,13 @@
 # TODO Please edit the following information in your assignment
 
-- Name:
-- How many hours did it take you to complete this assignment?
-- Did you collaborate with any other students/TAs/Professors?
+- Name: zengping xu
+- How many hours did it take you to complete this assignment? over 20 hours.
+- Did you collaborate with any other students/TAs/Professors? No
 - Did you use any external resources? (Cite them below)
   - tbd
   - tbd
-- (Optional) What was your favorite part of the assignment?
-- (Optional) How would you improve the assignment?
+- (Optional) What was your favorite part of the assignment? well practice C language.
+- (Optional) How would you improve the assignment? explain more in the lecture.
 
 # Logistics
 
