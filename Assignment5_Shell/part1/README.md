@@ -104,19 +104,22 @@ At a high level, implementing mini-shell takes the following components:
 -----------------------------------------------------
 NAME: 
 
-*edit me*
+history
 
 SYNOPSIS: 
 
-*edit me and add in a short description of the command and its usage*
+history command stores all of the previous commands a user has typed in and prints them out.
 
 DESCRIPTION:
 
-*Write a longer description of what he command does*
+history command stores all of the previous commands a user has typed in and prints them out.
 
 NOTES:
 
 *Enter two or three sentences (minimum) in how you implemented the built-in command.*
+Fisrt, check if input string is blank and check string's size. If the input string is valid, then parse it to commands.
+Second, insert commands to the back of historyCommands[] array, filter history command itself.
+Thrid, if user enter history, call builtin_history() function to print all previous commands and return 1.
 
 -----------------------------------------------------
 
