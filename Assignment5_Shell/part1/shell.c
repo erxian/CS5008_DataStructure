@@ -125,7 +125,7 @@ void executeCommand(char** parsed)
     	} 
 }
 
-
+// Function where pipe command is executed 
 void executePipeCommand(char** parsed, char** parsedpipe) {
     	int pipefd[2];  
     	pid_t p1, p2; 
@@ -134,13 +134,12 @@ void executePipeCommand(char** parsed, char** parsedpipe) {
         	printf("\nPipe could not be initialized"); 
         	return; 
     	} 
-    	p1 = fork(); // Parent executing
+    	p1 = fork();  // Parent executing
     	if (p1 < 0) { 
         	printf("\nCould not fork"); 
         	return; 
     	} 
-    	if (p1 == 0) { 
-        	// Child 1 executing.. 
+    	if (p1 == 0) {  // Child 1 executing.. 
         	dup2(pipefd[1], STDOUT_FILENO); 
         	close(pipefd[0]); 
         	close(pipefd[1]); 
@@ -155,8 +154,7 @@ void executePipeCommand(char** parsed, char** parsedpipe) {
             		printf("\nCould not fork"); 
             	return; 
         	} 
-        	// Child 2 executing.. 
-        	if (p2 == 0) {
+        	if (p2 == 0) {  // Child 2 executing..
 	    		signal(SIGINT, SIG_DFL); 
             		dup2(pipefd[0], STDIN_FILENO); 
             		close(pipefd[1]); 
