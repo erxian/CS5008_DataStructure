@@ -11,7 +11,8 @@ char colors[64][64*3];
 // Modify your paint function here
 void paint(int workID) { 
 	printf("Artist %d is painting\n",workID);
-	for (int i =0; i < 64*3; i++) {
+	int i;
+	for (i =0; i < 64*3; i++) {
 		colors[workID][i] = rand() % 125;
 	}
 }
@@ -26,8 +27,9 @@ void save() {
 	fputs("P3\n",fp);
 	fputs("64 64\n",fp);
 	fputs("255\n",fp);
-	for(int i =0; i < 64;i++){
-		for(int j =0; j < 64*3; j++){
+	int i, j;
+	for(i =0; i < 64;i++){
+		for(j =0; j < 64*3; j++){
 			fprintf(fp,"%d",colors[i][j]);
 			fputs(" ",fp);	
 		}
