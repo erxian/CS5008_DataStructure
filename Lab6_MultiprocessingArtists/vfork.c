@@ -14,6 +14,7 @@ int main(int argc, char** argv){
 
         int numberOfArtists = 8; // How many child processes do we want?
 
+	int* integers = malloc(sizeof(int)*8000);
 	pid_t pid;
 	// main loop where we fork new threads
 	int i;
@@ -33,6 +34,6 @@ int main(int argc, char** argv){
         }
 
         printf("parent is exiting(last artist out!)\n");
-
+	free(integers);
         return 0;
 }
