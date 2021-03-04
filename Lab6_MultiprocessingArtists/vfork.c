@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <math.h>
 
 char colors[64][64*3];
 
@@ -12,8 +11,8 @@ char colors[64][64*3];
 void paint(int workID) { 
 	printf("Artist %d is painting\n",workID);
 	int i;
-	for (i =0; i < 64*3; i++) {
-		colors[workID][i] = rand() % 125;
+	for (i=0; i < 64*3; i++) {
+		colors[workID][i] = workID + i % 64;
 	}
 }
 
