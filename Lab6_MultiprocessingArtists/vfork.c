@@ -30,8 +30,16 @@ int main(int argc, char** argv){
 			paint(i);
 			exit(0);
 		}
+
+		pid_t wpid;
+		int status = 0;
+		while ((wpid = wait(&status)) > 0);
 		printf("child pid: %d\n", pid);
         }
+
+//	pid_t wpid;
+//	int status = 0;
+//	while ((wpid = wait(&status)) > 0);
 
         printf("parent is exiting(last artist out!)\n");
 	free(integers);
