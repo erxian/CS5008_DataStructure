@@ -31,7 +31,11 @@ void save() {
 	for(i =0; i < 64;i++){
 		for(j =0; j < 64*3; j++){
 			fprintf(fp,"%d",colors[i][j]);
-			fputs(" ",fp);	
+			if ((j+1)%3 == 0) {
+				fputs("  ",fp);
+			} else {
+				fputs(" ",fp);	
+			}
 		}
 		fputs("\n",fp);
 	}
