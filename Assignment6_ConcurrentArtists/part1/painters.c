@@ -58,8 +58,10 @@ const int movement[][2] ={
 // lock structure.
 // The intent is to call this function early in main.
 void initCanvas(){
-	for(int x =0; x < CANVAS_WIDTH; ++x){
-		for(int y =0; y < CANVAS_HEIGHT; ++y){
+	int x;
+	for(x=0; x < CANVAS_WIDTH; ++x){
+		int y;
+		for(y=0; y < CANVAS_HEIGHT; ++y){
 			canvas[x][y].r = 255;
 			canvas[x][y].g = 255;
 			canvas[x][y].b = 255;
@@ -80,8 +82,10 @@ void outputCanvas(){
 	fputs("P3\n",fp);
 	fputs("256 256\n",fp);
 	fputs("255\n",fp);
-	for(int x =0; x < CANVAS_WIDTH; ++x){
-		for(int y =0; y < CANVAS_HEIGHT; ++y){
+	int x;	
+	for(x=0; x < CANVAS_WIDTH; ++x){
+		int y;	
+		for(y=0; y < CANVAS_HEIGHT; ++y){
 			fprintf(fp,"%d",canvas[x][y].r);
 			fputs(" ",fp);		
 			fprintf(fp,"%d",canvas[x][y].g);
@@ -101,7 +105,8 @@ void* paint(void* args){
 
     // Our artist will now attempt to paint 5000 strokes of paint
 	// on our shared canvas
-	for(int i=0; i < 5000; ++i){
+	int i;
+	for(i=0; i < 5000; ++i){
 
         // Generate a random number from 0-7
         int roll = (rand()%8);
@@ -221,7 +226,8 @@ artist_t* create_Leonardo() {
 artist_t** create_moreArtists(int rookieArtists) {
 	artist_t** moreArtists = (artist_t**)malloc(sizeof(artist_t*) * rookieArtists);
 	int createdArtists = 0;
-	for(int i=0; i < rookieArtists; ++i){
+	int i;
+	for(i=0; i < rookieArtists; ++i){
 		int colorPresent = 1;  // true
 		while (colorPresent) {
 			int r = rand() % 256;	
@@ -229,8 +235,8 @@ artist_t** create_moreArtists(int rookieArtists) {
 			int b = rand() % 256;	
 		
 			int colorUsed = 0; //false	
-
-			for (int j=0; j < createdArtists; j++) {
+			int j;
+			for (j=0; j < createdArtists; j++) {
 				if (moreArtists[j]->r == r && moreArtists[j]->g == g &&
 					moreArtists[j]->b == b) {
 					printf("color used\n");
@@ -289,8 +295,9 @@ int main(){
 	pthread_create(&Donatello_tid,NULL,(void*)paint,Donatello);
 	pthread_create(&Raphael_tid,NULL,(void*)paint,Raphael);
 	pthread_create(&Leonardo_tid,NULL,(void*)paint,Leonardo);
-	
-        for(int i =0; i < rookieArtists; ++i){
+	// create threads for 50 poor artists
+	int i;	
+        for(i =0; i < rookieArtists; ++i){
 		pthread_create(&moreArtists_tid[i], NULL, (void*)paint, moreArtists[i]);
 	}
 
@@ -302,12 +309,12 @@ int main(){
 	pthread_join(Leonardo_tid, NULL);		   
 
     // TODO: Add the join the 50 other artists threads here	
-        for(int i =0; i < rookieArtists; ++i){
+        for(i=0; i < rookieArtists; ++i){
     		pthread_join(moreArtists_tid[i], NULL);
     	}
 
 
-	for(int i =0; i < rookieArtists; ++i){
+	for(i=0; i < rookieArtists; ++i){
 		printf("x=%d, y=%d, rgb=%d %d %d\n", 
 			moreArtists[i]->x, moreArtists[i]->y,
 			moreArtists[i]->r, moreArtists[i]->g, moreArtists[i]->b);
@@ -321,7 +328,7 @@ int main(){
     	free(Leonardo);
     
     // TODO: Free any other memory you can think of
-    	for(int i =0; i < rookieArtists; ++i){
+    	for(i=0; i < rookieArtists; ++i){
 		free(moreArtists[i]);
     	}
 	free(moreArtists);
