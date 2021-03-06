@@ -97,13 +97,13 @@ int counter = 0;
 // TODO: You will make code changes here.
 // Here is our thread function for painting with no locking implemented.
 // You may modify this code however you like.
-void* paint(void* args){
+/*void* paint(void* args){
     // Convert our argument structure to an artist
-    artist_t* painter = (artist_t*)args;
+    	artist_t* painter = (artist_t*)args;
 
     // Our artist will now attempt to paint 5000 strokes of paint
 	// on our shared canvas
-	for(int i =0; i < 5000; ++i){
+	for(int i =0; i < 100000; ++i){
 
         // Store our initial position
         int currentX = painter->x;
@@ -122,33 +122,6 @@ void* paint(void* args){
 
 	pixel_t* pixel = &canvas[painter->x][painter->y];
  
-	/*if (pthread_mutex_trylock(&(pixel->lock)) == 0){
-        // the pixel is not locked by other threads, lock it 
-		// if the pixel color is white, painter can paint it
-       		if( canvas[painter->x][painter->y].r == 255 &&
-       		    canvas[painter->x][painter->y].g == 255 &&
-       		    canvas[painter->x][painter->y].b == 255){
-       		        canvas[painter->x][painter->y].r = painter->r;
-       		        canvas[painter->x][painter->y].g = painter->g;
-       		        canvas[painter->x][painter->y].b = painter->b;
-       		// if the color is not painter's color, backtrack	
-		} else if (canvas[painter->x][painter->y].r != painter->r &&
-			canvas[painter->x][painter->y].g != painter->g &&
-			canvas[painter->x][painter->y].b != painter->b) {
-       			// If we cannot paint the pixel, then we backtrack
-       			// to a previous pixel that we own.
-       		    	painter->x = currentX;
-       		    	painter->y = currentY;
-		}
-		// if the canvas has the same color of painter's color.
-		pthread_mutex_unlock(&(pixel->lock));
-	} else {
-		   // if the pixel has been locked by other threads, then go back to
-	           // a previous pixel that we own.
-       		    painter->x = currentX;
-       		    painter->y = currentY;
-       	            counter++;
-	}*/
 	pthread_mutex_lock( &(pixel->lock) );
 	if( canvas[painter->x][painter->y].r == 255 &&
 	    canvas[painter->x][painter->y].g == 255 &&
@@ -168,8 +141,60 @@ void* paint(void* args){
 	// if the canvas has the same color of painter's color.
 	pthread_mutex_unlock( &(pixel->lock) );
    }
-}
+}*/
 
+
+
+void* paint(void* args){
+    // Convert our argument structure to an artist
+    	artist_t* painter = (artist_t*)args;
+
+    // Our artist will now attempt to paint 5000 strokes of paint
+	// on our shared canvas
+	for(int i=0; i < 5000; ++i){
+
+        // Store our initial position
+        //int currentX = painter->x;
+	//int currentY = painter->y;
+        // Generate a random number from 0-7
+        int roll = (rand()%8);
+        int currentX = painter->x + movement[roll][0];
+        int currentY = painter->y + movement[roll][1];
+        // Clamp the range of our movements so we only
+        // paint within our 256x256 canvas.
+        if(currentX < 0) {  currentX= 0; }
+        if(currentX >  CANVAS_WIDTH-1) { currentX  = CANVAS_WIDTH-1; }
+        if(currentY< 0) { currentY = 0; }
+        if(currentY > CANVAS_HEIGHT-1) { currentY = CANVAS_HEIGHT-1; }
+  
+
+	pixel_t* pixel = &canvas[currentX][currentY];
+ 
+	pthread_mutex_lock( &(pixel->lock) );
+	if( canvas[currentX][currentY].r == 255 &&
+	    canvas[currentX][currentY].g == 255 &&
+	    canvas[currentX][currentY].b == 255){
+	        canvas[currentX][currentY].r = painter->r;
+	        canvas[currentX][currentY].g = painter->g;
+	        canvas[currentX][currentY].b = painter->b;	
+		
+	    	painter->x = currentX;
+	    	painter->y = currentY;
+	// if the color is not painter's color, backtrack	
+	} else if (canvas[currentX][currentY].r == painter->r &&
+		canvas[currentX][currentY].g == painter->g &&
+		canvas[currentX][currentY].b == painter->b) {
+		// If we cannot paint the pixel, then we backtrack
+		// to a previous pixel that we own.
+	    	painter->x = currentX;
+	    	painter->y = currentY;
+	} else {
+		counter++;
+
+	}	
+	pthread_mutex_unlock( &(pixel->lock) );
+    }
+}
 
 // create artist Michaelangelo
 artist_t* create_Michaelangelo() {
@@ -229,12 +254,12 @@ artist_t* create_Leonardo() {
 
 
 
-artist_t* create_moreArtists(int rookieArtists) {
+artist_t** create_moreArtists(int rookieArtists) {
 
     // TODO: Add 50 more artists 
          // artist_t* moreArtists = malloc(..);
-	//artist_t* moreArtists = (artist_t*)malloc(sizeof(artist_t) * rookieArtists);
-	artist_t* moreArtists[rookieArtists];
+	artist_t** moreArtists = (artist_t**)malloc(sizeof(artist_t*) * rookieArtists);
+	//artist_t* moreArtists[rookieArtists];
 	int createdArtists = 0;
 	for(int i=0; i < rookieArtists; ++i){
 		int colorPresent = 1;  // true
@@ -267,12 +292,11 @@ artist_t* create_moreArtists(int rookieArtists) {
 				colorPresent = 0;
 			}
 		}
-		//printf("createdArtists=%d\n", createdArtists);
 		printf("createdArtists=%d, x=%d, y=%d, rgb=%d %d %d\n", 
 			createdArtists, moreArtists[i]->x, moreArtists[i]->y,
 			moreArtists[i]->r, moreArtists[i]->g, moreArtists[i]->b);
 	}
-	return moreArtists[rookieArtists];
+	return moreArtists;
 }
 
 
@@ -288,44 +312,8 @@ int main(){
 	artist_t* Leonardo = create_Leonardo();
 	// create 50 more artists
         int rookieArtists = 50;
-	int createdArtists = 0;
-	artist_t* moreArtists[rookieArtists];
-	for(int i=0; i < rookieArtists; ++i){
-		int colorPresent = 1;  // true
-		while (colorPresent) {
-			int r = rand() % 256;	
-			int g = rand() % 256;	
-			int b = rand() % 256;	
-		
-			int colorUsed = 0; //false	
+	artist_t** moreArtists = create_moreArtists(rookieArtists);
 
-			for (int j=0; j < createdArtists; j++) {
-				if (moreArtists[j]->r == r && moreArtists[j]->g == g &&
-					moreArtists[j]->b == b) {
-					printf("color used\n");
-					colorUsed = 1;
-					break;
-				}
-			}
-			if (!colorUsed) {
-        			moreArtists[i] = malloc(sizeof(artist_t));	
-				// initialize starting position randomly;
-				moreArtists[i]->x = (rand()%255);
-				moreArtists[i]->y = (rand()%255);
-				// initialize paint color randomly;
-				moreArtists[i]->r = r;
-				moreArtists[i]->g = g; 
-				moreArtists[i]->b = b;
-				
-				createdArtists++;
-				colorPresent = 0;
-			}
-		}
-		//printf("createdArtists=%d\n", createdArtists);
-		printf("createdArtists=%d, x=%d, y=%d, rgb=%d %d %d\n", 
-			createdArtists, moreArtists[i]->x, moreArtists[i]->y,
-			moreArtists[i]->r, moreArtists[i]->g, moreArtists[i]->b);
-	}
     // Hold our thread id's
 	pthread_t Michaelangelo_tid;
 	pthread_t Donatello_tid;
@@ -340,7 +328,6 @@ int main(){
 	pthread_create(&Donatello_tid,NULL,(void*)paint,Donatello);
 	pthread_create(&Raphael_tid,NULL,(void*)paint,Raphael);
 	pthread_create(&Leonardo_tid,NULL,(void*)paint,Leonardo);
-
 	
         for(int i =0; i < rookieArtists; ++i){
 		pthread_create(&moreArtists_tid[i], NULL, (void*)paint, moreArtists[i]);
@@ -371,6 +358,7 @@ int main(){
     	for(int i =0; i < rookieArtists; ++i){
 		free(moreArtists[i]);
     	}
+	free(moreArtists);
 	printf("counter= %d\n", counter);
 	return 0;
 }
