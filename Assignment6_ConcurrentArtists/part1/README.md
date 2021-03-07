@@ -162,6 +162,9 @@ This means you need to enforce some locking mechanism.
 **Discuss(in a few sentences)** how starvation may occur in the above program, and how you would possibly fix it? (You may fix it in your implementation if you like--the art may become more beautiful!)
 
 *edit and add your response here*
+Since the start position is random, and the artist paint oder is random too.
+1. an artist starts to paint his first pixel, but unfortunately found that in every moveable direction, the pixel have been colored already by other painters. Then this artist will not paint anymore, starvation occurs. A possible way to solve this problem is making all start position evenly distributed in the canvas. But it will sacrifice randomness.
+2. If a painter found the next pixel is colored by other painter, he will do nothing, and in the next round he might re-choose the same pixel that has been colored. A way to solve this problem is record the coordinate of next pixel, if it was colored by other painters, then in the next round, compare the new random movement to previous movement coordinate, if they are same, then re-geneate a new random movement untill it is not the previous one.
 
 ## Rubric
 
