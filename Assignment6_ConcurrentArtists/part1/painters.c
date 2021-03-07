@@ -125,28 +125,30 @@ void* paint(void* args){
         if(nextY > CANVAS_HEIGHT-1) { nextY = CANVAS_HEIGHT-1; }
   
 	pixel_t* pixel = &canvas[nextX][nextY];
-	pthread_mutex_lock( &(pixel->lock) );
-	// if the color is white, paint it
-	if( canvas[nextX][nextY].r == 255 &&
-	    canvas[nextX][nextY].g == 255 &&
-	    canvas[nextX][nextY].b == 255){
-	        canvas[nextX][nextY].r = painter->r;
-	        canvas[nextX][nextY].g = painter->g;
-	        canvas[nextX][nextY].b = painter->b;	
-		// change current x to nextX, current y to nextY	
-	    	painter->x = nextX;
-	    	painter->y = nextY;
-		//painter->count += 1;
-	} else if (canvas[nextX][nextY].r == painter->r &&
-		canvas[nextX][nextY].g == painter->g &&
-		canvas[nextX][nextY].b == painter->b) {
-		// if the color is the same as painter's color, move to this pixel	
-	    	painter->x = nextX;
-	    	painter->y = nextY;
-	} else {
-		; // if the color is the same as this painter's color, do nothing
-	}	
-	pthread_mutex_unlock( &(pixel->lock) );
+	if (pthread_mutex_trylock( &(pixel->lock) ) == 0) {
+		// if the color is white, paint it
+		if( canvas[nextX][nextY].r == 255 &&
+		    canvas[nextX][nextY].g == 255 &&
+		    canvas[nextX][nextY].b == 255){
+		        canvas[nextX][nextY].r = painter->r;
+		        canvas[nextX][nextY].g = painter->g;
+		        canvas[nextX][nextY].b = painter->b;	
+			// change current x to nextX, current y to nextY	
+		    	painter->x = nextX;
+		    	painter->y = nextY;
+			//painter->count += 1;
+		} else if (canvas[nextX][nextY].r == painter->r &&
+			canvas[nextX][nextY].g == painter->g &&
+			canvas[nextX][nextY].b == painter->b) {
+			// if the color is the same as painter's color, move to this pixel	
+		    	painter->x = nextX;
+		    	painter->y = nextY;
+		} 
+		 // else if the color is other painter's color, do nothing
+		pthread_mutex_unlock( &(pixel->lock) );
+    	} else {
+		// if the color is locked by other painter, do nothing.
+	}
     }
 }
 
