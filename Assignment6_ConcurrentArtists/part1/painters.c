@@ -29,7 +29,7 @@ pixel_t canvas[CANVAS_WIDTH][CANVAS_HEIGHT];
 typedef struct artist{
 	int x,y;	// Store the position of where an artist is painting
 	int r,g,b;	// The color an artist paints in.
-	//int count;
+	//int count;    // count how many times the painter paint, observe starvation
 }artist_t;
 
 // An artist can move in one of the following directions
@@ -102,12 +102,10 @@ void outputCanvas(){
 void* paint(void* args){
     // Convert our argument structure to an artist
     	artist_t* painter = (artist_t*)args;
-
     // Our artist will now attempt to paint 5000 strokes of paint
 	// on our shared canvas
 	int i;
 	for(i=0; i < 5000; ++i){
-
         // Generate a random number from 0-7
         int roll = (rand()%8);
 	// get nextX and nextY
@@ -121,8 +119,8 @@ void* paint(void* args){
         if(nextY > CANVAS_HEIGHT-1) { nextY = CANVAS_HEIGHT-1; }
   
 	pixel_t* pixel = &canvas[nextX][nextY];
- 
 	pthread_mutex_lock( &(pixel->lock) );
+	// if the color is white, paint it
 	if( canvas[nextX][nextY].r == 255 &&
 	    canvas[nextX][nextY].g == 255 &&
 	    canvas[nextX][nextY].b == 255){
@@ -142,8 +140,7 @@ void* paint(void* args){
 	    	painter->x = nextX;
 	    	painter->y = nextY;
 	} else {
-		; // the position in nextX, nextY has the same color with this painter
-
+		; // if the color is the same as this painter's color, do nothing
 	}	
 	pthread_mutex_unlock( &(pixel->lock) );
     }
@@ -160,6 +157,7 @@ artist_t* create_Michaelangelo() {
 	Michaelangelo->g = 0;
 	Michaelangelo->b = 165;
 	//Michaelangelo->count = 1;
+	  // paint the starting positon
 	//canvas[Michaelangelo->x][Michaelangelo->y].r = Michaelangelo->r; 	
 	//canvas[Michaelangelo->x][Michaelangelo->y].g = Michaelangelo->g; 	
 	//canvas[Michaelangelo->x][Michaelangelo->y].b = Michaelangelo->b; 	
@@ -178,6 +176,7 @@ artist_t* create_Donatello() {
 	Donatello->g = 0;
 	Donatello->b = 128;
 	//Donatello->count = 1;	
+	  // paint the starting positon
 	//canvas[Donatello->x][Donatello->r].r = Donatello->r;
 	//canvas[Donatello->x][Donatello->r].g = Donatello->g;
 	//canvas[Donatello->x][Donatello->r].b = Donatello->b;
@@ -197,6 +196,7 @@ artist_t* create_Raphael() {
 	Raphael->g = 0;
 	Raphael->b = 0;	
 	//Raphael->count = 1;	
+	  // paint the starting positon
 	//canvas[Raphael->x][Raphael->y].r = Raphael->r;
 	//canvas[Raphael->x][Raphael->y].g = Raphael->g;
 	//canvas[Raphael->x][Raphael->y].b = Raphael->b;
@@ -214,6 +214,7 @@ artist_t* create_Leonardo() {
 	Leonardo->g = 0;
 	Leonardo->b = 255;
 	//Leonardo->count = 1;	
+	  // paint the starting positon
 	//canvas[Leonardo->x][Leonardo->y].r = Leonardo->r;
 	//canvas[Leonardo->x][Leonardo->y].g = Leonardo->g;
 	//canvas[Leonardo->x][Leonardo->y].b = Leonardo->b;
@@ -221,6 +222,23 @@ artist_t* create_Leonardo() {
 	return Leonardo;
 }
 
+// create one artist
+artist_t* create_Artist(int r, int g, int b) {
+	artist_t* artist = (artist_t*)malloc(sizeof(artist_t));
+	// initialize starting position randomly;
+	artist->x = (rand()%255);
+	artist->y = (rand()%255);
+	artist->r = r;
+	artist->g = g;
+	artist->b = b;
+	// artist->count = 1;
+	  // paint the starting positon
+	//canvas[x][y].r = r;
+	//canvas[x][y].g = g;
+	//canvas[x][y].b = b;
+	
+	return artist;
+}
 
 // Add 50 more artists
 artist_t** create_moreArtists(int rookieArtists) {
@@ -245,21 +263,10 @@ artist_t** create_moreArtists(int rookieArtists) {
 				}
 			}
 			if (!colorUsed) {
-        			moreArtists[i] = malloc(sizeof(artist_t));	
-				// initialize starting position randomly;
-				moreArtists[i]->x = (rand()%255);
-				moreArtists[i]->y = (rand()%255);
-				// initialize paint color randomly;
-				moreArtists[i]->r = r;
-				moreArtists[i]->g = g; 
-				moreArtists[i]->b = b;
-				//moreArtists[i]->count = 1;
-				//canvas[moreArtists[i]->x][moreArtists[i]->y].r = r;
-				//canvas[moreArtists[i]->x][moreArtists[i]->y].g = g;
-				//canvas[moreArtists[i]->x][moreArtists[i]->y].b = b;
-				
+				// create artist
+				moreArtists[i] = create_Artist(r, g, b);
 				createdArtists++;
-				colorPresent = 0;
+				colorPresent = 0;  //false
 			}
 		}
 	}
@@ -291,11 +298,11 @@ int main(){
     	srand(time(NULL));
 	
 	// Create our threads for each of our expert artists
-	pthread_create(&Michaelangelo_tid,NULL,(void*)paint,Michaelangelo);
-	pthread_create(&Donatello_tid,NULL,(void*)paint,Donatello);
-	pthread_create(&Raphael_tid,NULL,(void*)paint,Raphael);
-	pthread_create(&Leonardo_tid,NULL,(void*)paint,Leonardo);
-	// create threads for 50 poor artists
+	pthread_create(&Michaelangelo_tid, NULL, (void*)paint, Michaelangelo);
+	pthread_create(&Donatello_tid, NULL, (void*)paint, Donatello);
+	pthread_create(&Raphael_tid, NULL, (void*)paint, Raphael);
+	pthread_create(&Leonardo_tid, NULL, (void*)paint, Leonardo);
+	// create threads for 50 rookie artists
 	int i;	
         for(i =0; i < rookieArtists; ++i){
 		pthread_create(&moreArtists_tid[i], NULL, (void*)paint, moreArtists[i]);
@@ -308,11 +315,10 @@ int main(){
 	pthread_join(Raphael_tid, NULL);		   
 	pthread_join(Leonardo_tid, NULL);		   
 
-    // TODO: Add the join the 50 other artists threads here	
+    // TODO: Add the join the 50 rookie artists threads here	
         for(i=0; i < rookieArtists; ++i){
     		pthread_join(moreArtists_tid[i], NULL);
     	}
-
 
 	for(i=0; i < rookieArtists; ++i){
 		printf("x=%d, y=%d, rgb=%d %d %d\n", 
@@ -327,7 +333,7 @@ int main(){
     	free(Raphael);
     	free(Leonardo);
     
-    // TODO: Free any other memory you can think of
+    // TODO: Free 50 rookie artists here 
     	for(i=0; i < rookieArtists; ++i){
 		free(moreArtists[i]);
     	}
