@@ -249,7 +249,7 @@ artist_t* create_Artist(int r, int g, int b) {
 // a starting postion and color, artists will not have the same
 // color.
 artist_t** create_moreArtists(int rookieArtists) {
-	artist_t** moreArtists = (artist_t**)malloc(sizeof(artist_t*) * rookieArtists);
+	artist_t** moreArtists = (artist_t**)malloc(sizeof(artist_t*)*rookieArtists);
 	int createdArtists = 0;
 	int i;
 	for(i=0; i < rookieArtists; ++i){
@@ -263,7 +263,7 @@ artist_t** create_moreArtists(int rookieArtists) {
 			int j;
 			for (j=0; j < createdArtists; j++) {
 				if (moreArtists[j]->r == r && moreArtists[j]->g == g &&
-						moreArtists[j]->b == b) {
+				    moreArtists[j]->b == b) {
 					printf("color used\n");
 					colorUsed = 1;
 					break;
