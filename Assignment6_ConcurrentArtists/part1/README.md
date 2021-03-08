@@ -166,7 +166,8 @@ This means you need to enforce some locking mechanism.
 2. another case is one artist only piant very few pixels, and surrunded by another color. This happens because when context switch to the purple artist, he found all his moveable direction has been colored to red. Then this artist will repeatedly move within the purple island, starcation occurs.
 
 <img align="left" src="sample.jpg" width="250px" alt="picture">  
-
+  
+  
 ## Rubric
 
 
