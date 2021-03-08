@@ -165,7 +165,7 @@ This means you need to enforce some locking mechanism.
 1. an artist starts to paint his first pixel, but unfortunately found that in every moveable direction, the pixel have been colored already by other painters. Then this artist will not paint anymore, starvation occurs. This happens because the start postion and artist paint order are both random, two or more artists' start position get too close. A possible way to solve this problem is making all start position evenly distributed in the canvas. But it will sacrifice randomness.
 2. another case is one artist only piant very few pixels, and surrunded by another color. This happens because when context switch to the purple artist, he found all his moveable direction has been colored to red. Then this artist will repeatedly move within the purple island, starcation occurs.
 
-<img align="left" src="sample.jpg" width="600px" alt="picture">
+<img align="left" src="sample.jpg" width="300px" alt="picture">
 
 ## Rubric
 
