@@ -167,7 +167,7 @@ This means you need to enforce some locking mechanism.
 
 <img align="left" src="sample.jpg" width="250px" alt="picture">
 
-## 
+
 
 ## Rubric
 
