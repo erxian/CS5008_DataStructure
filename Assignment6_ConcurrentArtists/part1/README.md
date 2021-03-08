@@ -162,11 +162,11 @@ This means you need to enforce some locking mechanism.
 **Discuss(in a few sentences)** how starvation may occur in the above program, and how you would possibly fix it? (You may fix it in your implementation if you like--the art may become more beautiful!)
 
 *edit and add your response here*
-1. an artist starts to paint his first pixel, but unfortunately found that in every moveable direction, the pixel have been colored already by other painters. Then this artist will not paint anymore, starvation occurs. This happens because the start postion and artist paint order are both random, two or more artists' start position get too close. A possible way to solve this problem is making all start position evenly distributed in the canvas. But it will sacrifice randomness.
+1. an artist starts to paint his first pixel, but unfortunately found that in every moveable direction, the pixel have been colored already by other painters. Then this artist will not paint anymore, starvation occurs. This happens because the start postion and artist paint order are both random, two artists' start position might get too close, the one paint first possibly color other painter's start position. A way to solve this problem is making all start position evenly distributed in the canvas. But it will sacrifice randomness, so I don't fix it in my implementation.
 
 <img align="right" src="sample.jpg" width="150px" alt="picture">
 
-2. another case is one artist only piant very few pixels, and surrunded by another color. This happens because when context switch to the purple artist, he found all his moveable direction has been colored to red. Then this artist will repeatedly move within the purple island, starcation occurs.
+2. another case is one artist only piant very few pixels, and surrunded by another color. This happens because when context switch to the blue artist, he found all his moveable direction has been colored to red. Then this artist will repeatedly move within the bule island, starvation occurs. A possible way to solve this problem is using fairness distributed strategy to guarantee every artists having the same priority to execute.
 
  
 ## Rubric
