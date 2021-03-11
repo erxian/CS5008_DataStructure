@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+// Counter the power of base with n.
 double power(double base, double n) {
 	double p = 1;
 	for(int i = 0; i < n; i++) {
@@ -9,9 +10,10 @@ double power(double base, double n) {
 }
 
 int main() {
-	double num1 = power(2, 1);
-	double num2 = power(2, 10);
-	printf("1 to the power 2 is: %f\n", num1);
-	printf("10 to the power 2 is: %f\n", num2);
+	int maxPower = 11;
+	// count power 1 to 11
+	for (int i=1; i < maxPower; i++) {
+		printf("%d to the power 2 is: %f\n", i, power(2, i));
+	}
 	return 0;
 }
