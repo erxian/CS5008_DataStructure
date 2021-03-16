@@ -13,14 +13,24 @@
 int findMinimum(int* array, int start, int stop){
     // TODO: Iterate through a subset of the array and find the minimum value.
     //       Return the index of that minimum value.
-  
-    return -1; // TODO: Modify this to return the
+	int minIndex = start;
+	int iter = start;
+	while (iter != stop) {
+		if (array[minIndex] > array[iter]) {
+			minIndex = iter; 
+		}	
+		iter++;
+	}
+   	return minIndex; // TODO: Modify this to return the
 }
 
 // Swaps two numbers in an array
 // Input: The 'address of' an index into an array for positions in an array.
 void swap(int* a, int* b){
     // TODO: Swap two integers in an array.
+	int temp = *a;	
+ 	*a = *b;	
+	*b = temp;
 }
 
 // Provided below is a sort function. I have also
@@ -34,6 +44,11 @@ void swap(int* a, int* b){
 // Output: No value is returned, but 'array' should be modified to store a sorted array of numbers.
 void sortIntegers(int* array, unsigned int size){
     // TODO: Implement selection sort
+	unsigned int i;
+	for (i=0; i < size; i++) {
+		int minIndex = findMinimum(array, i, size);
+		swap(&array[i], &array[minIndex]);	
+	}
 }
 
 
@@ -41,7 +56,7 @@ void sortIntegers(int* array, unsigned int size){
 //        The size of the array (Because we do not know how big the array is automatically)
 void printIntArray(int* array, unsigned int size){
   unsigned int i; // Note: 'unsigned int' is a datatype for storing positive integers.
-  for(i = 0; i < size; i=i+1){
+  for(i=0; i < size; i=i+1){
     printf("%d ",array[i]);
   }
   printf("\n");
