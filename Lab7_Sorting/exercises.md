@@ -9,7 +9,7 @@
 
 ## Answers:
 
-1. *edit your answer here for question 1*
-2. *edit your answer here for question 2*
-3. *edit your answer here for question 3*
-4. *edit your answer here for question 4*
+1. O(n^2)
+2. O(n^2)
+3. No, you don't. Because swap operation will not affect the size of memory.
+4. No, the complexity is still O(n^2) for best-case, average-case, and worst-case.
