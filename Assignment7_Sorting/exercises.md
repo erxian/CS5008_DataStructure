@@ -10,7 +10,7 @@ Discuss and answer the following questions (Please make sure to elaborate and ju
 
 ## Answers:
 
-1. *edit your answer here for question 1*
-2. *edit your answer here for question 2*
-3. *edit your answer here for question 3*
-4. *edit your answer here for question 4*
+1. O(n^2). In worst case the data are sorted in reverse order, the total comparisons required are 1 + 2 + 3 + 4 + ... + (n-1) = (n-1)*n/2 = O(n^2), the total swaps needed are 1 + 2 + 3 + 4 + ... + (n-1) = (n-1)*n/2 = O(n^2) as well.
+2. O(n). The best-case the data are sorted already in correct order, e.g.(sorted by ascending) 1, 2, 3, 4, 5, 6, ... , n. Then the total comparisons needed is 1 + 1 + 1 + ... + 1 = n = O(n), the total swaps needed are O(1);
+3. No, it doesn't. Because indertion sort is in-place sorting, the algorithm updates input sequence only through replacement or swapping of elements, no additional arrays are created to temporarily store data.
+4. Stable sorting algorithms maintain the relative order of records with equal keys (i.e. values). That is, a sorting algorithm is stable if whenever there are two records R and S with the same key and with R appearing before S in the original list, R will appear before S in the sorted list. Insertion sort is a stable algorithm, because if two elements with the same key, they will not swap after comparison, so the relative order remains.
