@@ -11,7 +11,7 @@ sys	0m0.005s
 csort(3 trials average):
 real	0m0.017s
 user	0m0.004s
-sys	0m0.003s
+sys	0m0.003s  
 
 # Exercise 2
 
