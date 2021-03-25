@@ -4,10 +4,14 @@ Please edit this document below with your responses. Each question is worth 1/8 
 
 1. Record here how long it took you to run bubblesort and csort (Note: If you want to run several trials, say '10' and take an average that is an even better result!).
 
-Bubblesort(3 trials average):               csort(3 trials average):
-real	0m0.422s                              real	0m0.017s
-user	0m0.406s                              user	0m0.004s
-sys	0m0.005s                                sys	0m0.003s
+Bubblesort(3 trials average):               
+real	0m0.422s                              
+user	0m0.406s                              
+sys	0m0.005s                                
+csort(3 trials average):
+real	0m0.017s
+user	0m0.004s
+sys	0m0.003s
 
 # Exercise 2
 
