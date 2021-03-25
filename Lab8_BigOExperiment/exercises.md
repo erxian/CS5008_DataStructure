@@ -56,4 +56,4 @@ List the following functions in terms of their Big-O complexity from **smallest*
 
 - Given: f(n) = 3n^3 + n^2 + 27
 - What are two constants c and k that prove your answer in exercise 7.
-- when c = 31, for all n >= 1, |f(n)| <= c*|g(n)| holds.
+- when c = 31, for all k >= 1, |f(n)| <= c*|g(n)| holds.
