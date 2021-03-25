@@ -18,7 +18,7 @@ sys	0m0.003s
 
 What is the Big-O complexity of bubblesort?
 
-1. O(n^2)
+1. worst-case: O(n^2), average-case: O(n^2)
 
 # Exercise 3
 
