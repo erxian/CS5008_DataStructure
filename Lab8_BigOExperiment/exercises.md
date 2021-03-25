@@ -7,7 +7,8 @@ Please edit this document below with your responses. Each question is worth 1/8 
 Bubblesort(3 trials average):               
 real	0m0.422s                              
 user	0m0.406s                              
-sys	0m0.005s                                
+sys	0m0.005s    
+  
 csort(3 trials average):  
 real	0m0.017s  
 user	0m0.004s  
@@ -55,4 +56,4 @@ List the following functions in terms of their Big-O complexity from **smallest*
 
 - Given: f(n) = 3n^3 + n^2 + 27
 - What are two constants c and k that prove your answer in exercise 7.
-- when c = 5, for all n >= 1, |f(n)| <= c*|g(n)| holds.
+- when c = 31, for all n >= 1, |f(n)| <= c*|g(n)| holds.
