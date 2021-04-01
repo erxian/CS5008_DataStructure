@@ -55,6 +55,13 @@ void swapStrings(char** s1, char** s2){
   }
 }
 
+void swap(char** s1, char** s2){
+	char* temp = *s1;
+	*s1 = *s2;
+	*s2 = temp;
+}
+
+
 // @Name    bruteForceSort
 // @Brief   A simple O(N*N) sorting algorithm.
 void bruteForceSort(char** array, unsigned int start, unsigned int end){
@@ -72,10 +79,32 @@ void bruteForceSort(char** array, unsigned int start, unsigned int end){
 // @Brief   Helper funcion for quicksort
 int partition(char** array, unsigned int low, unsigned int high){
     // TODO:
+	int i = low - 1;
+	int j;
+	for (j = low; j <= high - 1; j++) {
+		if (strcmp(array[j], array[high]) <= 0) {
+			i++;
+			swap(&array[i], &array[j]);
+		}
+	}
+	swap(&array[i+1], &array[high]);
+	return (i + 1);	
 }
 
 void quicksort(char** array, unsigned int low, unsigned int high){
+//void quicksort(char** array, int low, int high){
     // TODO:
+
+    if ( (low+1) < (high+1) ) {
+        // pivot here is the partitioning index
+	// This means array[pivot] is at the correct 
+	// position and will not need to  move
+        int pivot = partition(array, low, high);
+	// Recurse on the left and right side of the pivot
+	// Note: The offsets of -1 and +1 to avoid the pivot.
+        quicksort(array, low, pivot - 1);  // Before pivot
+        quicksort(array, pivot + 1, high); // After pivot
+    }
 }
 
 
@@ -92,6 +121,7 @@ int main(){
   // ===========================================
   // ===== Experiment 1 - Using Brute Force Sort ====
   // Create a clock to measure the elapsed time
+
   clock_t start1,end1;
   start1 = clock();
   // perform bruteForceSort after starting your timer
@@ -104,10 +134,11 @@ int main(){
   // ===== Experiment 2 - Using Quick Sort ====
   //printArrayOfCharStrings(musicDatabase2,0,994);
   // Create a clock to measure the elapsed time
+
   clock_t start2,end2;
   start2 = clock();
   // perform quicksort after starting your timer
-  quicksort(musicDatabase2,0,13594);  
+  quicksort(musicDatabase2,0,13593);  
   end2 = clock();
   double experiment2 = ((double)(end2-start2)/CLOCKS_PER_SEC);
   // ===========================================
@@ -123,6 +154,18 @@ int main(){
   printf("\nResults of sorting:\n");
   printf("%f time taking for brute force\n", experiment1);
   printf("%f time taking for quick sort\n", experiment2);
+
   
+  unsigned int i=0;
+  for(i =0; i < 13594; i++){
+      // free memory for every song 
+	free(musicDatabase1[i]);
+	free(musicDatabase2[i]);
+	
+  }
+ 
+  free(musicDatabase1);
+  free(musicDatabase2);
+ 
   return 0;
 }
