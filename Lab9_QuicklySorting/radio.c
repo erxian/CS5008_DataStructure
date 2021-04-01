@@ -55,12 +55,12 @@ void swapStrings(char** s1, char** s2){
   }
 }
 
+// swap for quick sort
 void swap(char** s1, char** s2){
 	char* temp = *s1;
 	*s1 = *s2;
 	*s2 = temp;
 }
-
 
 // @Name    bruteForceSort
 // @Brief   A simple O(N*N) sorting algorithm.
@@ -79,10 +79,11 @@ void bruteForceSort(char** array, unsigned int start, unsigned int end){
 // @Brief   Helper funcion for quicksort
 int partition(char** array, unsigned int low, unsigned int high){
     // TODO:
-	int i = low - 1;
-	int j;
+	int j, i = low - 1;
+	char* pivotSong = array[high];
+
 	for (j = low; j <= high - 1; j++) {
-		if (strcmp(array[j], array[high]) <= 0) {
+		if (strcmp(array[j], pivotSong) <= 0) {
 			i++;
 			swap(&array[i], &array[j]);
 		}
@@ -114,7 +115,6 @@ void free_data(char** database, int size) {
 	}
 	free(database);
 }
-
 
 int main(){
   // Load our unsorted music file
