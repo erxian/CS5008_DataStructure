@@ -92,7 +92,6 @@ int partition(char** array, unsigned int low, unsigned int high){
 }
 
 void quicksort(char** array, unsigned int low, unsigned int high){
-//void quicksort(char** array, int low, int high){
     // TODO:
 
     if ( (low+1) < (high+1) ) {
@@ -105,6 +104,15 @@ void quicksort(char** array, unsigned int low, unsigned int high){
         quicksort(array, low, pivot - 1);  // Before pivot
         quicksort(array, pivot + 1, high); // After pivot
     }
+}
+
+// free data
+void free_data(char** database, int size) {
+	int i;
+	for (i=0; i<size; i++) {
+		free(database[i]);
+	}
+	free(database);
 }
 
 
@@ -154,18 +162,9 @@ int main(){
   printf("\nResults of sorting:\n");
   printf("%f time taking for brute force\n", experiment1);
   printf("%f time taking for quick sort\n", experiment2);
-
-  
-  unsigned int i=0;
-  for(i =0; i < 13594; i++){
-      // free memory for every song 
-	free(musicDatabase1[i]);
-	free(musicDatabase2[i]);
-	
-  }
- 
-  free(musicDatabase1);
-  free(musicDatabase2);
+  // free memory 
+  free_data(musicDatabase1, 13594);
+  free_data(musicDatabase2, 13594);
  
   return 0;
 }
