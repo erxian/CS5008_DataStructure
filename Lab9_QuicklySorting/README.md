@@ -97,8 +97,9 @@ void swapStrings(char** s1, char** s2){
 ```
 
 <!--**Answer the following with your partner:**--> **Answer the following here**: How do you think the strcmp function is implemented? i.e. What would your algorithm be in a sentence or two?
+The prototype of strcmp is: int strcmp(const char* X, const char* Y); The strcmp() function returns an integer greater than, equal to, or less than zero, accordingly as the string pointed to by X is greater than, equal to, or less than the string pointed to by Y.
+The function basically performs a binary comparison of characters of both strings until the characters differ or until a terminating null-character is reached
 
-*edit your answer here*
 
 # Part 3 - Quick sort
 
