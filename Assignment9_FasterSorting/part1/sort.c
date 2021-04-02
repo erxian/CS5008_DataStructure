@@ -10,11 +10,62 @@
 // Second subarray is arr[m+1..r] 
 void merge(int arr[], int l, int m, int r) {
   //TODO: implement merge.
+    int i, j, k;
+    int size_left = m - l + 1;
+    int size_right = r - m;
+    // create Left array and Right array by m
+    int Left[size_left], Right[size_right];
+ 
+    // Copy data to Left & Right array
+    for (i = 0; i < size_left; i++)
+        Left[i] = arr[l + i];
+
+    for (j = 0; j < size_right; j++)
+        Right[j] = arr[m + 1 + j];
+ 
+    /* Merge the temp arrays back into arr[l..r]*/
+    i = 0; // Initial index of first subarray
+    j = 0; // Initial index of second subarray
+    k = l; // Initial index of merged subarray
+    while (i < size_left && j < size_right) {
+        if (Left[i] <= Right[j]) {
+            arr[k] = Left[i];
+            i++;
+        }
+        else {
+            arr[k] = Right[j];
+            j++;
+        }
+        k++;
+    }
+ 
+    // Copy the remaining elements of Left[]
+    while (i < size_left) {
+        arr[k] = Left[i];
+        i++;
+        k++;
+    }
+ 
+    // Copy the remaining elements of Right[]
+    while (j < size_right) {
+        arr[k] = Right[j];
+        j++;
+        k++;
+    }	
 }
 
 // Implement your mergeSort function here
 // TODO:
-
+void mergeSort(int* array, int l, int r) {
+	if (l < r) {
+		//int m = l + (r-1)/2;
+		int m = (l+r)/2;	
+		mergeSort(array, l, m);
+		mergeSort(array, m+1, r);
+		
+		merge(array, l, m, r);
+	}
+}
 // Provided below is a sort function. We have also
 // provided a template for how to document functions
 // to help organize your code.
@@ -26,6 +77,8 @@ void merge(int arr[], int l, int m, int r) {
 // Output: No value is returned, but 'array' should be modified to store a sorted array of numbers.
 void sortIntegers(int* array, unsigned int size){
     // TODO: make a call to your mergeSort function here
+	//printf("size: %d\n", size);
+	mergeSort(array, 0, size-1);	
 }
 
 
