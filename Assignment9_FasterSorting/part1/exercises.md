@@ -8,19 +8,19 @@
 
 1. Explain: What do you think the Big-O (worst-case) complexity of the merge sort algorithm is and why? 
 
-O(n*log2(n)). In worst case, the array is sorted in reverse order, the entire input must be iterated through, and this must occur O(log2(n)) times (the input can only be halved O(log2(n)) times). For every time, the input items are n, therefore n items iterated log2(n) times gives O(n*log2(n)).
+O(n*log2(n)). In worst case, the array is sorted in reverse order, the entire input must be iterated through, and this must occur O(log2(n)) times (the input can only be halved O(log2(n)) times). Eevery time, the input items are n, therefore n items iterated log2(n) times gives O(n*log2(n)).
 
 2. Explain: What do you think the best-case complexity of the merge sort algorithm is and why?
 
-O(n*log2(n)). In best case, even the array has been sorted, the entire input also must be iterated through O(log2(n)) times (the input can only be halved O(log2(n)) times). For every time, the input items are n, therefore n items iterated log2(n) times gives O(n*log2(n)).
+O(n*log2(n)). In best case, even the array has been sorted, the entire input also must be iterated through O(log2(n)) times. For every time, the input items are n, therefore n items iterated log2(n) times gives O(n*log2(n)).
 
 3. Does merge sort require any additional storage beyond the original array? If so how much and why?
 
-Yes, after O(log2(n)) times halved, when merging the divided subarrays, require additional storage to store the sorted subarray, that is: n*array[1] + n/2*array[2] + n/4*array[4] ... 2*array[n/2] + 1*array[n]
+Yes. The elements will be split into two sub-arrays (n/2) again and again until only one element is left. When merging the divided subarrays, require additional storage to store the sorted subarray,  that is: n*array[1] + n/2*array[2] + n/4*array[4] ... 2*array[n/2] + 1*array[n], as a result requires O(N) additional memory
 
 4. How much time in Big-O does it take to merge all of the subarrays together? Explain or draw why?
 
-O(n*log2(n)), merging all subarrays must be iterated through O(log2(n)) times, the merging process is the tracing back of the halved process. For every time, the input are n, so n times iterated log(n) tiems gives O(n*log2(n))
+O(n*log2(n)), merging all subarrays must be iterated through O(log2(n)) times, each time merging two sorted subarrays back into the single sorted subarray. Every time, the input are n elements, so n times iterated log(n) tiems gives O(n*log2(n))
 
 
 ## Interview Prep (Optional +1% Bonus on assignment)
