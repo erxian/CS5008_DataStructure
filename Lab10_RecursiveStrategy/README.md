@@ -60,7 +60,7 @@ unsigned long long int
 
 2. Try <!-- with your partner --> computing factorials larger than say 15. At what input value for the factorial functions does your computer start to 'crash' or really slow down when you try to compute a factorial? Experiment and report your results.
 
- when computing factorials larger than 65(exclusive), the computer start to 'crash', it cannot compute the factorials since the result beyound unsigned long long int data range and the result will be 0.
+ when computing factorials larger than 20(exclusive), the computer start to 'crash', it cannot compute the correct factorials, e.g. 21! = 51090942171709440000, but my computer counting result is 14197454024290336768.
 
 ## Compiling and running the program.
 
