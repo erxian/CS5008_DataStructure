@@ -4,23 +4,37 @@
 #include <stdio.h>
 
 // TODO: Implement iterative solution here
-int factorial(int n){
+unsigned long long int factorial(int n){
+	// if n equals to 0 or 1, return
+	if (n == 0 || n == 1) {
+		return 1;
+	} 
 
-  return 0;
-};
+	unsigned long long int fact = 1;
+	int i;
+
+	for (i = 1; i <= n; i++) {	
+		fact = fact * i;	
+	}
+	
+  	return fact;
+}
 
 // TODO: Implement recursive solution here
-int factorial_rec(int n){
-
-  return 0;
+unsigned long long int factorial_rec(int n){
+	// Base Case
+  	if (n == 0 || n == 1) {
+		return 1;
+  	} 
+	// Recursive Call	
+	return n * factorial_rec(n-1);
 }
 
 int main(){
 
   // Both of these should print the same result!
-  printf("factorial(10) = %d\n",factorial(10));
-  printf("factorial_rec(10) = %d\n",factorial_rec(10));
-
+  printf("factorial(10) = %llu\n",factorial(65));
+  printf("factorial_rec(10) = %llu\n",factorial_rec(65));
 
   return 0;
 }
