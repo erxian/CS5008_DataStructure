@@ -23,7 +23,14 @@ void dfs(TreeNode_t* start){
     // TODO: Hmm, how can I look through both branches of the node?
     //       Hmm, when do I stop?
     //
+	if (start == NULL) {
+		return;
+	}
+	printf("%c ", start->data);
+	dfs(start->left);
+	dfs(start->right);
 }
+
 
 int main(){
 
@@ -79,6 +86,7 @@ int main(){
   
   // Perform the dfs
   dfs(start);
+  printf("\n");
   
   // Perform the dfs at a different spot)
   
