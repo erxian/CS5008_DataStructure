@@ -33,8 +33,8 @@ unsigned long long int factorial_rec(int n){
 int main(){
 
   // Both of these should print the same result!
-  printf("factorial(10) = %llu\n",factorial(65));
-  printf("factorial_rec(10) = %llu\n",factorial_rec(65));
+  printf("factorial(20) = %llu\n",factorial(20));
+  printf("factorial_rec(20) = %llu\n",factorial_rec(20));
 
   return 0;
 }
