@@ -216,5 +216,6 @@ void freeNode(bstnode_t* node) {
 // This should be called before the proram terminates.
 void bst_free(bst_t* t){
 	freeNode(t->root);
+	free(t);
 }
 
