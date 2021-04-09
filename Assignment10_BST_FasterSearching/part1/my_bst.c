@@ -5,12 +5,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
+// Create a BST Node
+// Returns a pointer to a newly created BST Node
 bstnode_t* makeNode(int data) {
 	bstnode_t* bstNode = malloc(sizeof(bstnode_t));
     	if (bstNode == NULL) {
 		return NULL;
-   	 }
+   	}
+
     	bstNode->data = data;
     	bstNode->leftChild = NULL;
     	bstNode->rightChild = NULL;
@@ -29,6 +31,7 @@ bst_t* bst_create(){
     if (myBST == NULL) {
 	return NULL;
     }
+
     myBST->size = 0;
     myBST->root = NULL;
 
@@ -47,7 +50,7 @@ int bst_empty(bst_t* t){
 }
 
 // recursively add node to tree
-int addHelper(bstnode_t* node, bstnode_t* newNode) {
+void addHelper(bstnode_t* node, bstnode_t* newNode) {
 	if (newNode->data <= node->data) {
 		if (node->leftChild == NULL) {
 			node->leftChild = newNode;
@@ -61,7 +64,6 @@ int addHelper(bstnode_t* node, bstnode_t* newNode) {
 			addHelper(node->rightChild, newNode);
 		}
 	}
-	return 0;
 }
 
 
@@ -77,7 +79,7 @@ int addHelper(bstnode_t* node, bstnode_t* newNode) {
 //  - A recursive imlementation is suggested.
 int bst_add(bst_t* t, int item){
 	if (t == NULL) {
-		return 0;
+		return -1;
 	}
 
 	bstnode_t* newNode = makeNode(item);	
@@ -87,7 +89,7 @@ int bst_add(bst_t* t, int item){
 	// if root is NULL
 	if (t->root == NULL) {
 		t->root = newNode;
-		t->size += 1;
+		t->size = 1;
 		return 1;
 	}
 	// if root is not NULL, add newNode to tree
@@ -133,7 +135,7 @@ void bst_print(bst_t *t, int order){
     }
 }
 
-// resursively add all nodes of the tree
+// resursively sum all nodes data
 int sumHelper(bstnode_t* node) {
 	if (node == NULL) {
 		return 0;
@@ -146,7 +148,12 @@ int sumHelper(bstnode_t* node) {
 // exits the program for a NULL tree. 
 // It should run in O(n) time.
 int bst_sum(bst_t *t){
+	// if this is a NULL tree
 	if (NULL == t) {
+		exit(1);
+	}
+	// if the tree root is a NULL
+	if (t->root == NULL) {
 		exit(1);
 	}
 	
@@ -201,6 +208,7 @@ unsigned int bst_size(bst_t* t){
     	return t->size;
 }
 
+// recursively free all tree nodes
 void freeNode(bstnode_t* node) {
 	if (node == NULL) {
 		return;
@@ -215,7 +223,12 @@ void freeNode(bstnode_t* node) {
 // Removes a BST and ALL of its elements from memory.
 // This should be called before the proram terminates.
 void bst_free(bst_t* t){
+	if (t == NULL) {
+		return;
+	}
+	// first free tree nodes, after that free tree
 	freeNode(t->root);
+	// free tree
 	free(t);
 }
 
