@@ -10,11 +10,10 @@ Discuss and answer the following questions (Make sure to elaborate and justify y
 
 ## Answers
 
-1. *edit your answer here*
-2. *edit your answer here*
-3. *edit your answer here*
-4. *edit your answer here*
-
+1. A balanced tree means: (1) its absolute difference of heights of left and right subtrees at any node is less than 1. (2) For each node, its left subtree is a balanced binary tree. (3) For each node, its right subtree is a balanced binary tree.
+2. O(log(n))
+6. Yes, it could. In worset-case, a binary search tree degenerate to a linked list. When searching a key, we have to check the key against the key of every node, therefore its time complexity of a search is O(n).
+7. T(N) = T(N/2) + O(1)
 
 
 ## Interview Prep (Optional +1% Bonus on assignment)
