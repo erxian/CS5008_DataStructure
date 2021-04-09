@@ -64,11 +64,33 @@ int unitTest3(){
 }
 
 
+int unitTest4() {
+	int result;
+	bst_t* testBST = bst_create();
+	bst_add(testBST, 5);
+	bst_add(testBST, 3);
+	bst_add(testBST, 8);	
+	bst_add(testBST, 1);
+	bst_add(testBST, 4);
+	bst_add(testBST, 6);
+	bst_add(testBST, 9);
+	printf("sum = %d\n", bst_sum(testBST));
+	printf("find 7 is: %d\n", bst_find(testBST, 7));
+	bst_print(testBST, 2);
+	result = testBST->size;
+	bst_free(testBST);
+	if (result == 7) {
+		return 1;
+	}
+	return 0;
+}
+
 // TODO: Add more tests here at your discretion
 int (*unitTests[])(int)={
     unitTest1,
     unitTest2,
     unitTest3,
+    unitTest4,
     NULL
 };
 
