@@ -110,11 +110,11 @@ int unitTest5() {
 
 // TODO: Add more tests here at your discretion
 int (*unitTests[])(int)={
-    //unitTest1,
-    //unitTest2,
-    //unitTest3,
+    unitTest1,
+    unitTest2,
+    unitTest3,
     unitTest4,
-    //unitTest5,
+    unitTest5,
     NULL
 };
 
