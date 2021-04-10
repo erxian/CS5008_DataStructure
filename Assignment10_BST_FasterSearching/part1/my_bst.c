@@ -8,7 +8,7 @@
 // Create a BST Node
 // Returns a pointer to a newly created BST Node
 bstnode_t* makeNode(int data) {
-	bstnode_t* bstNode = malloc(sizeof(bstnode_t));
+	bstnode_t* bstNode = (bstnode_t*)malloc(sizeof(bstnode_t));
     	if (bstNode == NULL) {
 		return NULL;
    	}
@@ -27,7 +27,7 @@ bstnode_t* makeNode(int data) {
 // The BST fields should also be initialized to default values(i.e. size=0).
 bst_t* bst_create(){
     // Modify the body of this function as needed.
-    bst_t* myBST = malloc(sizeof(bst_t));; 
+    bst_t* myBST = (bst_t*)malloc(sizeof(bst_t));; 
     if (myBST == NULL) {
 	return NULL;
     }
