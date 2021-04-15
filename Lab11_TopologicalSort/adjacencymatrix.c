@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#define ROWS 5
+#define COLUMNS 5
 
 // These defines do a text replacement
 // everytime the string 'ROWS' and 'COLUMNS'
@@ -59,13 +61,13 @@
 //       we do not seed the random number generator
 //       so we can generate the same graph over
 //       and over again.
-void generateGraph(int** g, int rows, int columns){
+void generateGraph(int** g){
     // Uncomment the line below if you want
     // to generate a random graph each time.
     // srand(time(NULL));  
     int i,j;
-    for(i=0; i < rows; i++){
-        for(j=0; j < columns; j++){
+    for(i=0; i < ROWS; i++){
+        for(j=0; j < COLUMNS; j++){
             if(i==j){
                 g[i][j] = 0; // Why do we have this condition? to make sure each vertex has no cycle with itself
             }else{
@@ -77,10 +79,10 @@ void generateGraph(int** g, int rows, int columns){
 
 // This function will print out the adjacency
 // matrix for a graph.
-void printGraph(int** g, int rows, int columns){ 
+void printGraph(int** g){ 
     int i,j;
-    for(i=0; i < rows; i++){
-        for(j=0; j < columns; j++){
+    for(i=0; i < ROWS; i++){
+        for(j=0; j < COLUMNS; j++){
             printf("%d ",g[i][j]);
         }
         printf("\n");
@@ -90,11 +92,11 @@ void printGraph(int** g, int rows, int columns){
 // Compute 'in-degree' of a node
 // For a given node 'n' in an adjacency matrix,
 // compute the in-degree.
-int nodeInDegree(int** g, int node, int rows){
+int nodeInDegree(int** g, int node){
     // TODO
     int i;
     int inDegreeNum = 0;
-    for(i=0; i< rows; i++){
+    for(i=0; i< ROWS; i++){
 	if (g[i][node] == 1) {
 		inDegreeNum += 1;
 	}
@@ -105,11 +107,11 @@ int nodeInDegree(int** g, int node, int rows){
 // Compute 'out-degree' of a node
 // For a given node 'n' in an adjacency matrix,
 // compute the out-degree.
-int nodeOutDegree(int** g, int node, int columns){
+int nodeOutDegree(int** g, int node){
     // TODO
     int i;
     int outDegreeNum = 0;
-    for(i=0; i< columns; i++){
+    for(i=0; i< COLUMNS; i++){
 	if (g[node][i] == 1) {
 		outDegreeNum += 1;
 	}
@@ -130,9 +132,9 @@ int isConnected(int** g, int node1, int node2){
 
 
 // free Graph
-void freeGraph(int** g, int rows) {
+void freeGraph(int** g) {
         int i=0;
-        for (i = 0;i < rows; i++) {
+        for (i = 0;i < ROWS; i++) {
                 free(g[i]);
         }
 
@@ -141,30 +143,28 @@ void freeGraph(int** g, int rows) {
 
 
 int main(){
-    int rows = 5;
-    int columns = 5;
-    int** g_testgraph = (int**)malloc(sizeof(int*)*rows);
+    int** g_testgraph = (int**)malloc(sizeof(int*)*ROWS);
 
     int i=0;
-    for (i=0; i < rows; ++i) {
-        g_testgraph[i] = (int*)malloc(sizeof(int)*columns);
+    for (i=0; i < ROWS; ++i) {
+        g_testgraph[i] = (int*)malloc(sizeof(int)*COLUMNS);
     } 
     // Generate a random graph
-    generateGraph(g_testgraph, rows, columns);
+    generateGraph(g_testgraph);
     // Print out the graph
-    printGraph(g_testgraph, rows, columns);
+    printGraph(g_testgraph);
     printf("\n");
     // Print out the nodeInDegree of each of the
     // five nodes
-    for(i =0; i < columns; ++i){
-        printf("node %d in-degree= %d\n",i,nodeInDegree(g_testgraph,i,rows));
+    for(i =0; i < COLUMNS; ++i){
+        printf("node %d in-degree= %d\n",i,nodeInDegree(g_testgraph,i));
     }
     printf("\n");
 
     // Print out the nodeInDegree of each of the
     // five nodes
-    for(i =0; i < columns; ++i){
-        printf("node %d out-degree= %d\n",i,nodeOutDegree(g_testgraph,i,columns));
+    for(i =0; i < COLUMNS; ++i){
+        printf("node %d out-degree= %d\n",i,nodeOutDegree(g_testgraph,i));
     }
     printf("\n");
 
@@ -173,7 +173,7 @@ int main(){
 
     int j;
     int has_connect = 0;
-    for(j =0; j < columns; ++j){
+    for(j =0; j < COLUMNS; ++j){
         if (isConnected(g_testgraph,0,j)) {
                 has_connect = 1;
         	printf("node%d ", j);
@@ -185,7 +185,7 @@ int main(){
 	printf("nobody\n");
     }
     // free graph
-    freeGraph(g_testgraph, rows);
+    freeGraph(g_testgraph);
 
     return 0;
 }
