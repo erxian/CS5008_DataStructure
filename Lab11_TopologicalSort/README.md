@@ -203,9 +203,9 @@ eat exercise
 
 Your answer:
 
-1. *edit your response*
-2. *edit your response*
-3. *edit your response*
+1. No
+2. No
+3. using Depth-First-Search (DFS).
 
 
 # Deliverable
