@@ -205,8 +205,7 @@ Your answer:
 
 1. No
 2. No
-3. using Depth-First-Search (DFS).
-
+3. We can also do a depth-first search, marking vertices along the way. If you hit a vertex that you have already marked, then you have a cycle.
 
 # Deliverable
 
