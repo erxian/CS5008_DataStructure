@@ -1,2 +1,12 @@
+exercise sleep
+exercise spa 
+work exercise
 eat sleep
 eat exercise
+eat work
+drive eat
+drive work
+washup eat
+washup sleep
+
+
