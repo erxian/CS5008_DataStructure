@@ -151,7 +151,7 @@ Okay, now that you understand the data structure, you will implement two functio
 Your answers here:
 
 1. O(n^2)
-2. yes. If the graph is an undirected graph, its adjacency matrix rows must equal to column. But if the graph is a directed graph, its adjacency matrix rows doesn't have to equal to column.
+2. No, rows and column don't need always equal . If the graph is an undirected graph, its adjacency matrix rows must equal to column. But if the graph is a directed graph, its adjacency matrix rows doesn't have to equal to column.
 
 
 ## Compiling and running the program.
