@@ -272,6 +272,23 @@ void* dll_get(dll_t* l, int pos){
 	}
 }
 
+// Returns the position of the item
+// Returns -1 if the list is NULL or item is not in the list
+int dll_get_pos(dll_t* l, void* item) {
+	if (l == NULL) return -1;
+
+	node_t* currentNode = l->head;
+	int i;
+	for (i=0; i < l->count; i++) {
+		if (currentNode->data == item) {
+			return i;
+		}
+		currentNode = currentNode->next;
+	}
+	return -1;
+} 
+
+
 // Removes the item at position pos starting at 0 ( 0 being the first item )
 // Retruns NULL on failure:
 //  * we tried to remove at a negative location.
