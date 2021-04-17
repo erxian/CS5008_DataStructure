@@ -46,6 +46,7 @@ int main(int argc, const char * argv[]) {
 
     //printf("node%d in neighbors nums is %d\n", node, getNumInNeighbors(graph, node));
     //printf("node%d out neighbors nums is %d\n", 1, getNumOutNeighbors(graph, 1));
+    free_graph(graph);
 
     return 0;
 }
