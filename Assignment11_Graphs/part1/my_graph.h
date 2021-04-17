@@ -154,13 +154,11 @@ int graph_remove_node(graph_t* g, int value){
     dll_t* outNeighbors = getOutNeighbors(g, value);
     dll_t* inNeighbors = getInNeighbors(g, value);
    
-    int nodePosInGraphNodes = dll_get_pos(g->nodes, remove_node); 
     // remove remove_node from all its outNeighbors 
     node_t* iter_out = remove_node->outNeighbors->head;    
     while(iter_out != NULL) {
 	graph_node_t* g_node = iter_out->data;
-        int pos = dll_get_pos(g_node->inNeighbors, remove_node);
-	dll_remove(g_node->inNeighbors, pos);
+    	dll_remove_node(g_node->inNeighbors, remove_node);
         g->numEdges--;
         iter_out = iter_out->next;
     }
@@ -169,18 +167,18 @@ int graph_remove_node(graph_t* g, int value){
     node_t* iter_in = remove_node->inNeighbors->head; 
     while(iter_in != NULL) {
  	graph_node_t* g_node = iter_in->data;
-        int pos = dll_get_pos(g_node->outNeighbors, remove_node);
-	dll_remove(g_node->outNeighbors, pos);
+    	dll_remove_node(g_node->outNeighbors, remove_node);
         g->numEdges--;
 	iter_in = iter_in->next;
     }
-    
+    // free in and out neighbors of remove_node 
     free_dll(remove_node->inNeighbors);
     free_dll(remove_node->outNeighbors);
     // remove remove_node from graph nodes 
-    dll_remove(g->nodes, nodePosInGraphNodes);
+    dll_remove_node(g->nodes, remove_node);
     free(remove_node);
     g->numNodes--;
+
     return 1;
 }
 
@@ -251,8 +249,8 @@ int graph_remove_edge(graph_t * g, int source, int destination){
     int desPosInSourceOutNeig = dll_get_pos(source_node->outNeighbors, des_node);
     int sourcePosInDesInNeig = dll_get_pos(des_node->inNeighbors, source_node);
 
-    dll_remove(source_node->outNeighbors, desPosInSourceOutNeig);
-    dll_remove(des_node->inNeighbors, sourcePosInDesInNeig);
+    dll_remove_node(source_node->outNeighbors, des_node);
+    dll_remove_node(des_node->inNeighbors, source_node);
     g->numEdges--;
 
     return 1;
@@ -294,7 +292,5 @@ void free_graph(graph_t* g){
         free_dll(g->nodes);
         free(g);
 }
-
-
 
 #endif

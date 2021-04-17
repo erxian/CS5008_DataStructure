@@ -272,6 +272,7 @@ void* dll_get(dll_t* l, int pos){
 	}
 }
 
+
 // Returns the position of the item
 // Returns -1 if the list is NULL or item is not in the list
 int dll_get_pos(dll_t* l, void* item) {
@@ -328,6 +329,37 @@ void* dll_remove(dll_t* l, int pos){
 	return NULL;
 }
 
+// Removes the node with value item
+// Retruns NULL on failure (e.g. del node not in dll or node is null
+// Returns NULL if the list is NULL
+void* dll_remove_node(dll_t* l, void* item) {
+	if (l == NULL) return NULL;
+        
+	if (item == NULL) return NULL;
+
+        // If node to be deleted is head node
+	if (l->head->data == item) {
+		dll_pop_front(l);	
+	// If node to be deleted is head node
+	} else if (l->tail->data == item) {
+		dll_pop_back(l);
+	} else {
+		node_t* iter = l->head;
+		node_t* del;
+		while (iter != NULL) {
+			if (iter->data == item) {
+				del = iter;
+			}
+			iter = iter->next;
+		}	
+		del->previous->next = del->next;
+		del->next->previous = del->previous;	
+		free(del);
+		l->count--;
+	}	
+	// If node not in dll, do thing
+	return NULL;
+}
 
 // Free DLL
 // Removes a DLL and all of its elements from memory.
