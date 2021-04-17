@@ -155,8 +155,6 @@ int graph_remove_node(graph_t* g, int value){
     dll_t* inNeighbors = getInNeighbors(g, value);
    
     int nodePosInGraphNodes = dll_get_pos(g->nodes, remove_node); 
-    dll_remove(g->nodes, nodePosInGraphNodes);
-    g->numNodes--;
     // remove remove_node from all its outNeighbors 
     node_t* iter_out = remove_node->outNeighbors->head;    
     while(iter_out != NULL) {
@@ -176,7 +174,13 @@ int graph_remove_node(graph_t* g, int value){
         g->numEdges--;
 	iter_in = iter_in->next;
     }
- 
+    
+    free_dll(remove_node->inNeighbors);
+    free_dll(remove_node->outNeighbors);
+    // remove remove_node from graph nodes 
+    dll_remove(g->nodes, nodePosInGraphNodes);
+    free(remove_node);
+    g->numNodes--;
     return 1;
 }
 
@@ -281,6 +285,8 @@ void free_graph(graph_t* g){
 	node_t* iter = g->nodes->head;
 	while (iter != NULL){
 		graph_node_t* g_node = iter->data;
+		free_dll(g_node->inNeighbors);
+		free_dll(g_node->outNeighbors);
                 free(g_node);
 		iter = iter->next;
 	}	
