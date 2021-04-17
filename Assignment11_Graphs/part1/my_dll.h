@@ -210,13 +210,14 @@ int dll_insert(dll_t* l, int pos, void* item){
 	if ( pos > dll_size(l) || pos < 0){
 		return 0;
 	}
-	
+
+	int success = 1;	
 	// inserting at the size pos
 	if ( pos == dll_size(l)){
-		dll_push_back(l, item);
+		success = dll_push_back(l, item);
 	// insert at 0 pos
 	} else if ( pos == 0 ){
-		dll_push_front(l, item);
+		success = dll_push_front(l, item);
 	} else {
 		node_t* currentNode = l->head;
 		int i;
@@ -237,7 +238,7 @@ int dll_insert(dll_t* l, int pos, void* item){
 		currentNode->previous = newNode;
 		l->count++;
 	}
-	return 1;        
+	return success;        
 }
 
 // Returns the item at position pos starting at 0 ( 0 being the first item )
@@ -273,23 +274,6 @@ void* dll_get(dll_t* l, int pos){
 }
 
 
-// Returns the position of the item
-// Returns -1 if the list is NULL or item is not in the list
-int dll_get_pos(dll_t* l, void* item) {
-	if (l == NULL) return -1;
-
-	node_t* currentNode = l->head;
-	int i;
-	for (i=0; i < l->count; i++) {
-		if (currentNode->data == item) {
-			return i;
-		}
-		currentNode = currentNode->next;
-	}
-	return -1;
-} 
-
-
 // Removes the item at position pos starting at 0 ( 0 being the first item )
 // Retruns NULL on failure:
 //  * we tried to remove at a negative location.
@@ -307,6 +291,7 @@ void* dll_remove(dll_t* l, int pos){
 		//return 0;
 		return NULL;
 	}
+
 	if ( pos == 0 ){
 		dll_pop_front(l);	
 	} else if ( pos == dll_size(l) - 1 ){
@@ -329,13 +314,29 @@ void* dll_remove(dll_t* l, int pos){
 	return NULL;
 }
 
+// Returns 1 on success
+// Returns 0 on failure ( or if the nodes don't exist )
+// Returns -1 if the graph is NULL.
+int contains_node(dll_t* l, void* item) {
+	if (l == NULL) return -1;
+
+	node_t* iter = l->head;
+	while (iter != NULL) {
+		if (iter->data == item) {
+			return 1;
+		}
+		iter = iter->next;
+	}	
+	return 0;
+}
+
 // Removes the node with value item
 // Retruns NULL on failure (e.g. del node not in dll or node is null
 // Returns NULL if the list is NULL
 void* dll_remove_node(dll_t* l, void* item) {
 	if (l == NULL) return NULL;
-        
-	if (item == NULL) return NULL;
+       	// if node not in dll 
+	if (!contains_node(l, item)) return NULL;
 
         // If node to be deleted is head node
 	if (l->head->data == item) {
@@ -345,19 +346,15 @@ void* dll_remove_node(dll_t* l, void* item) {
 		dll_pop_back(l);
 	} else {
 		node_t* iter = l->head;
-		node_t* del;
-		while (iter != NULL) {
-			if (iter->data == item) {
-				del = iter;
-			}
+		while (iter != NULL && iter->data != item) {
 			iter = iter->next;
 		}	
-		del->previous->next = del->next;
-		del->next->previous = del->previous;	
-		free(del);
+		// find node iter with data item
+		iter->previous->next = iter->next;
+		iter->next->previous = iter->previous;	
+		free(iter);
 		l->count--;
 	}	
-	// If node not in dll, do thing
 	return NULL;
 }
 
