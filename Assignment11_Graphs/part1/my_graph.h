@@ -49,14 +49,6 @@ graph_t* create_graph(){
 graph_node_t* find_node( graph_t* g, int value){
 	if (g == NULL) return NULL;
 
-	//node_t* iter = g->nodes->head;
-	//while (iter != NULL){
-	//	graph_node_t* g_node = iter->data;
-	//	if (g_node->data == value) {
-	//		return g_node;
-	//	}
-	//	iter = iter->next;
-	//}	
 	int i;
         for (i=0; i < g->numNodes; i++) {
 		graph_node_t* g_node =  dll_get(g->nodes, i);
@@ -168,15 +160,8 @@ int graph_remove_node(graph_t* g, int value){
     int inNeigNum = getNumInNeighbors(g, value);
     dll_t* inNeighbors = getInNeighbors(g, value);
    
-    // remove del_node from all its outNeighbors 
-    //node_t* iter_out = del_node->outNeighbors->head;    
-    //while(iter_out != NULL) {
-    //    graph_node_t* g_node = iter_out->data;
-    //	dll_remove_node(g_node->inNeighbors, del_node);
-    //    g->numEdges--;
-    //    iter_out = iter_out->next;
-    //}
     int i, j;
+    // remove del_node from all its outNeighbors 
     for (i=0; i < outNeigNum; i++) {
 	graph_node_t* out_neig_node = dll_get(outNeighbors, i);  // get outNeighbor node
         int in_Neig_Num = getNumInNeighbors(g, out_neig_node->data);  // get the inNeighborNum of this outNeighbor node
@@ -197,14 +182,6 @@ int graph_remove_node(graph_t* g, int value){
 		
 
     // remove del_node from all its inNeighbors 
-    //node_t* iter_in = del_node->inNeighbors->head; 
-    //while(iter_in != NULL) {
-    //    graph_node_t* g_node = iter_in->data;
-    //	dll_remove_node(g_node->outNeighbors, del_node);
-    //    g->numEdges--;
-    //    iter_in = iter_in->next;
-    //}
-
     for (i=0; i < inNeigNum; i++) {
 	graph_node_t* in_neig_node = dll_get(inNeighbors, i);
         int out_Neig_Num = getNumOutNeighbors(g, in_neig_node->data);
@@ -223,7 +200,6 @@ int graph_remove_node(graph_t* g, int value){
     free_dll(del_node->inNeighbors);
     free_dll(del_node->outNeighbors);
     // remove remove_node from graph nodes 
-    //dll_remove_node(g->nodes, del_node);
     for (i=0; i < g->numNodes; i++) {
 	graph_node_t* g_node = dll_get(g->nodes, i);
 	if (g_node == del_node) {
@@ -248,15 +224,6 @@ int contains_edge( graph_t * g, int source, int destination){
 
     if (source_node == NULL || des_node == NULL) return 0;
 
-    //node_t* iter = source_node->outNeighbors->head;
-    //while (iter != NULL){
-    //	graph_node_t* g_node = iter->data;
-    //	if (g_node->data == destination) {
-    //		return 1;
-    //	}
-    //	iter = iter->next;
-    //}	
-    
     dll_t* out_Neighbors = getOutNeighbors(g, source);
     dll_t* in_Neighbors = getInNeighbors(g, destination);
     if (contains_node(out_Neighbors, des_node) &&
