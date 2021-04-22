@@ -282,14 +282,14 @@ void* dll_get(dll_t* l, int pos){
 // Assume no negative numbers in the list or the number zero.
 void* dll_remove(dll_t* l, int pos){
 	if ( l == NULL ){		
-		//return -1; // Note: This line is a 'filler' so the code compiles.
-		return NULL;
+		return -1; // Note: This line is a 'filler' so the code compiles.
+		//return NULL;
 	}
 
 	// if pos is negative or past the size of the list
 	if ( pos > dll_size(l) - 1 || pos < 0){
-		//return 0;
-		return NULL;
+		return 0;
+		//return NULL;
 	}
 
 	if ( pos == 0 ){
@@ -310,8 +310,8 @@ void* dll_remove(dll_t* l, int pos){
 		l->count--;
 	}
 
-	//return 1;
-	return NULL;
+	return 1;
+	//return NULL;
 }
 
 // Returns 1 on success
@@ -333,30 +333,30 @@ int contains_node(dll_t* l, void* item) {
 // Removes the node with value item
 // Retruns NULL on failure (e.g. del node not in dll or node is null
 // Returns NULL if the list is NULL
-void* dll_remove_node(dll_t* l, void* item) {
-	if (l == NULL) return NULL;
-       	// if node not in dll 
-	if (!contains_node(l, item)) return NULL;
-
-        // If node to be deleted is head node
-	if (l->head->data == item) {
-		dll_pop_front(l);	
-	// If node to be deleted is head node
-	} else if (l->tail->data == item) {
-		dll_pop_back(l);
-	} else {
-		node_t* iter = l->head;
-		while (iter != NULL && iter->data != item) {
-			iter = iter->next;
-		}	
-		// find node iter with data item
-		iter->previous->next = iter->next;
-		iter->next->previous = iter->previous;	
-		free(iter);
-		l->count--;
-	}	
-	return NULL;
-}
+//void* dll_remove_node(dll_t* l, void* item) {
+//	if (l == NULL) return NULL;
+//       	// if node not in dll 
+//	if (!contains_node(l, item)) return NULL;
+//
+//        // If node to be deleted is head node
+//	if (l->head->data == item) {
+//		dll_pop_front(l);	
+//	// If node to be deleted is head node
+//	} else if (l->tail->data == item) {
+//		dll_pop_back(l);
+//	} else {
+//		node_t* iter = l->head;
+//		while (iter != NULL && iter->data != item) {
+//			iter = iter->next;
+//		}	
+//		// find node iter with data item
+//		iter->previous->next = iter->next;
+//		iter->next->previous = iter->previous;	
+//		free(iter);
+//		l->count--;
+//	}	
+//	return NULL;
+//}
 
 // Free DLL
 // Removes a DLL and all of its elements from memory.

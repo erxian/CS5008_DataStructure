@@ -49,15 +49,21 @@ graph_t* create_graph(){
 graph_node_t* find_node( graph_t* g, int value){
 	if (g == NULL) return NULL;
 
-	node_t* iter = g->nodes->head;
-	while (iter != NULL){
-		graph_node_t* g_node = iter->data;
+	//node_t* iter = g->nodes->head;
+	//while (iter != NULL){
+	//	graph_node_t* g_node = iter->data;
+	//	if (g_node->data == value) {
+	//		return g_node;
+	//	}
+	//	iter = iter->next;
+	//}	
+	int i;
+        for (i=0; i < g->numNodes; i++) {
+		graph_node_t* g_node =  dll_get(g->nodes, i);
 		if (g_node->data == value) {
 			return g_node;
 		}
-		iter = iter->next;
-	}	
-
+	}
        	return NULL;
 }
 
@@ -156,33 +162,81 @@ int graph_remove_node(graph_t* g, int value){
     // if the node doesn't exist
     if (del_node == NULL) return 0;
    
+    int outNeigNum = getNumOutNeighbors(g, value);
     dll_t* outNeighbors = getOutNeighbors(g, value);
+    
+    int inNeigNum = getNumInNeighbors(g, value);
     dll_t* inNeighbors = getInNeighbors(g, value);
    
     // remove del_node from all its outNeighbors 
-    node_t* iter_out = del_node->outNeighbors->head;    
-    while(iter_out != NULL) {
-	graph_node_t* g_node = iter_out->data;
-    	dll_remove_node(g_node->inNeighbors, del_node);
-        g->numEdges--;
-        iter_out = iter_out->next;
-    }
+    //node_t* iter_out = del_node->outNeighbors->head;    
+    //while(iter_out != NULL) {
+    //    graph_node_t* g_node = iter_out->data;
+    //	dll_remove_node(g_node->inNeighbors, del_node);
+    //    g->numEdges--;
+    //    iter_out = iter_out->next;
+    //}
+    int i, j;
+    for (i=0; i < outNeigNum; i++) {
+	// get outNeighbor node
+	graph_node_t* out_neig_node = dll_get(outNeighbors, i);
+	// get the inNeighborNum of this outNeighbor node
+        int in_Neig_Num = getNumInNeighbors(g, out_neig_node->data);
+	// get inNeighbors of this outNeighbor node
+        dll_t* in_Neighbors = getInNeighbors(g, out_neig_node->data);
+	for(j=0; j <  in_Neig_Num; j++) {
+		graph_node_t* g_node = dll_get(in_Neighbors, j);
+		// find del_node position in inNeighbors, then remove it
+		if (g_node == del_node) {
+			// validate if remove success
+			int success = dll_remove(in_Neighbors, j);
+			if (success) {
+ 				g->numEdges--;
+			} else {
+				return 0;
+			}
+		}
+	}
+    } 
+		
 
     // remove del_node from all its inNeighbors 
-    node_t* iter_in = del_node->inNeighbors->head; 
-    while(iter_in != NULL) {
- 	graph_node_t* g_node = iter_in->data;
-    	dll_remove_node(g_node->outNeighbors, del_node);
-        g->numEdges--;
-	iter_in = iter_in->next;
-    }
+    //node_t* iter_in = del_node->inNeighbors->head; 
+    //while(iter_in != NULL) {
+    //    graph_node_t* g_node = iter_in->data;
+    //	dll_remove_node(g_node->outNeighbors, del_node);
+    //    g->numEdges--;
+    //    iter_in = iter_in->next;
+    //}
+
+    for (i=0; i < inNeigNum; i++) {
+	graph_node_t* in_neig_node = dll_get(inNeighbors, i);
+        int out_Neig_Num = getNumOutNeighbors(g, in_neig_node->data);
+        dll_t* out_Neighbors = getOutNeighbors(g, in_neig_node->data);
+	for(j=0; j <  out_Neig_Num; j++) {
+		graph_node_t* g_node = dll_get(out_Neighbors, j);
+		if (g_node == del_node) {
+			dll_remove(out_Neighbors, j);
+ 			g->numEdges--;
+		}
+	}
+    } 
+		
+
     // free in and out neighbors of del_node 
     free_dll(del_node->inNeighbors);
     free_dll(del_node->outNeighbors);
     // remove remove_node from graph nodes 
-    dll_remove_node(g->nodes, del_node);
+    //dll_remove_node(g->nodes, del_node);
+    for (i=0; i < g->numNodes; i++) {
+	graph_node_t* g_node = dll_get(g->nodes, i);
+	if (g_node == del_node) {
+		dll_remove(g->nodes, i);
+		g->numNodes--;
+	}	
+    }	
+
     free(del_node);
-    g->numNodes--;
 
     return 1;
 }
@@ -198,14 +252,22 @@ int contains_edge( graph_t * g, int source, int destination){
 
     if (source_node == NULL || des_node == NULL) return 0;
 
-    node_t* iter = source_node->outNeighbors->head;
-    while (iter != NULL){
-    	graph_node_t* g_node = iter->data;
-    	if (g_node->data == destination) {
-    		return 1;
-    	}
-    	iter = iter->next;
-    }	
+    //node_t* iter = source_node->outNeighbors->head;
+    //while (iter != NULL){
+    //	graph_node_t* g_node = iter->data;
+    //	if (g_node->data == destination) {
+    //		return 1;
+    //	}
+    //	iter = iter->next;
+    //}	
+    
+    dll_t* out_Neighbors = getOutNeighbors(g, source);
+    dll_t* in_Neighbors = getInNeighbors(g, destination);
+    if (contains_node(out_Neighbors, des_node) &&
+	contains_node(in_Neighbors, source_node)) {
+		return 1;
+    }
+     
     return 0;
 }
 
@@ -255,9 +317,33 @@ int graph_remove_edge(graph_t * g, int source, int destination){
 
     // the edge doesn't exists
     if (!contains_edge(g, source, destination)) return 0;
+    
         
-    dll_remove_node(source_node->outNeighbors, des_node);
-    dll_remove_node(des_node->inNeighbors, source_node);
+    //dll_remove_node(source_node->outNeighbors, des_node);
+    //dll_remove_node(des_node->inNeighbors, source_node);
+    int outNeigNum = getNumOutNeighbors(g, source);
+    dll_t* outNeighbors = getOutNeighbors(g, source); 
+
+    int i;
+    for (i=0; i < outNeigNum; i++) {
+	graph_node_t* g_node = dll_get(outNeighbors, i);
+	if (g_node == des_node) {
+		dll_remove(outNeighbors, i);
+	}
+    }
+
+
+    int inNeigNum = getNumOutNeighbors(g, destination);
+    dll_t* inNeighbors = getInNeighbors(g, destination); 
+
+    int j;
+    for (j=0; j < inNeigNum; j++) {
+	graph_node_t* g_node = dll_get(inNeighbors, j);
+	if (g_node == source_node) {
+		dll_remove(outNeighbors, j);
+	}
+    }
+
     g->numEdges--;
 
     return 1;

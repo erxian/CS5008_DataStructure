@@ -21,6 +21,12 @@ int main(int argc, const char * argv[]) {
     graph_add_node(graph, 2);
     graph_add_node(graph, 3);
     graph_add_node(graph, 4);
+    //int node = 5; //graph_node_t* target_node = find_node(graph, node);
+    //if (target_node == NULL) {
+    //    printf("no such node\n");
+    //} else {
+    //    printf("node data is %d\n", target_node->data);
+    //} 
     // add edge 1 to 2, 3, 4; 2 to 3, 4; 3 to 4 
     graph_add_edge(graph, 1, 2);
     graph_add_edge(graph, 1, 3);
@@ -28,7 +34,7 @@ int main(int argc, const char * argv[]) {
     graph_add_edge(graph, 2, 3);
     graph_add_edge(graph, 2, 4);
     graph_add_edge(graph, 3, 4);
-    printf("add duplicate edge %d\n", graph_add_edge(graph, 3, 4));
+    printf("contains edge 4 to 2 = %d\n", contains_edge(graph, 4, 2));
     print_graph(graph);
     printf("before total nodes = %d\n", graph_num_nodes(graph));
     printf("before total edges = %d\n", graph_num_edges(graph));
@@ -52,7 +58,7 @@ int main(int argc, const char * argv[]) {
 
     //printf("node%d in neighbors nums is %d\n", node, getNumInNeighbors(graph, node));
     //printf("node%d out neighbors nums is %d\n", 1, getNumOutNeighbors(graph, 1));
-    print_graph(graph);
+    //print_graph(graph);
     free_graph(graph);
 
     return 0;
