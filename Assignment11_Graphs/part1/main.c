@@ -16,38 +16,43 @@
 
 int main(int argc, const char * argv[]) {
     graph_t * graph = create_graph();
+    // add node 1, 2, 3, 4
     graph_add_node(graph, 1);
     graph_add_node(graph, 2);
     graph_add_node(graph, 3);
     graph_add_node(graph, 4);
-    graph_add_edge(graph, 1, 4);
+    // add edge 1 to 2, 3, 4; 2 to 3, 4; 3 to 4 
     graph_add_edge(graph, 1, 2);
     graph_add_edge(graph, 1, 3);
+    graph_add_edge(graph, 1, 4);
     graph_add_edge(graph, 2, 3);
-    printf("add duplicate edge %d\n", graph_add_edge(graph, 2, 3));
     graph_add_edge(graph, 2, 4);
     graph_add_edge(graph, 3, 4);
+    printf("add duplicate edge %d\n", graph_add_edge(graph, 3, 4));
     print_graph(graph);
-    printf("before total nodes =%d\n", graph_num_nodes(graph));
-    printf("before total edges = %d\n", graph->numEdges);
+    printf("before total nodes = %d\n", graph_num_nodes(graph));
+    printf("before total edges = %d\n", graph_num_edges(graph));
+
     //printf("find 1 in graph, its value is %d\n", find_node(graph, 1)->data);
     //printf("from node%d to node%d contains edge %d\n", 2, 4, contains_edge(graph, 2, 4));
-    int node = 2;
     //printf("node%d in neighbors nums is %d\n", node, getNumInNeighbors(graph, node));
     //printf("node%d out neighbors nums is %d\n", 1, getNumOutNeighbors(graph, 1));
-    
-    graph_node_t* target_node = find_node(graph, node);
+    //graph_node_t* target_node = find_node(graph, node);
+
+    int node = 2;
     graph_remove_node(graph, node);
 
     printf("\n");
     print_graph(graph);
-    printf("after total nodes =%d\n", graph_num_nodes(graph));
-    printf("after total edges = %d\n", graph->numEdges);
+    printf("after total nodes = %d\n", graph_num_nodes(graph));
+    printf("after total edges = %d\n", graph_num_edges(graph));
+
     //printf("node%d positon is %d\n", node, dll_get_pos(getOutNeighbors(graph, 1), target_node));
     //graph_remove_edge(graph, 1, 3);
 
     //printf("node%d in neighbors nums is %d\n", node, getNumInNeighbors(graph, node));
     //printf("node%d out neighbors nums is %d\n", 1, getNumOutNeighbors(graph, 1));
+    print_graph(graph);
     free_graph(graph);
 
     return 0;

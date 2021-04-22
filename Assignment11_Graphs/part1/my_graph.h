@@ -300,7 +300,7 @@ void free_graph(graph_t* g){
     free(g);
 }
 
-
+// print graph nodes and its neighbors
 void print_graph(graph_t* g) {
 	if (g == NULL) return;
 	node_t* iter = g->nodes->head;
