@@ -130,17 +130,14 @@ int dll_push_back(dll_t* l, void* item){
 // Assume no negative numbers in the list or the number zero.
 void* dll_pop_front(dll_t* t){
 	if ( t == NULL ){
-		//return -1;
-		return NULL;
+		return (void*)-1;
 	}
 	//check if stack is empty
 	if ( dll_empty(t)){
-		//return 0; // Note: This line is a 'filler' so the code compiles.
-		return NULL;
+		return (void*)0; // Note: This line is a 'filler' so the code compiles.
 	}
 	if ( t->head == NULL ){
-		//return -1;
-		return NULL;
+		return (void*)-1;
 	}
 	//int item = t->head->data;
 	void* item = t->head->data;
@@ -164,20 +161,16 @@ void* dll_pop_front(dll_t* t){
 // Assume no negative numbers in the list or the number zero.
 void* dll_pop_back(dll_t* t){
 	if ( t == NULL ){
-		//return -1;
-		return NULL;
+		return (void*) -1;
 	}
 	//check if stack is empty
 	if ( dll_empty(t)){
-		//return 0; // Note: This line is a 'filler' so the code compiles.
-		return NULL;
+		return (void*) 0; // Note: This line is a 'filler' so the code compiles.
 	}
 	if ( t->tail == NULL ){
-		//return -1;
-		return NULL;
+		return (void*) -1;
 	}
 
-	//int item = t->tail->data;
 	void* item = t->tail->data;
 	
 	if ( t->tail == t->head){
@@ -250,14 +243,12 @@ int dll_insert(dll_t* l, int pos, void* item){
 // Assume no negative numbers in the list or the number zero.
 void* dll_get(dll_t* l, int pos){
 	if ( l == NULL ){		
-		//return -1; // Note: This line is a 'filler' so the code compiles.
-		return NULL;
+		return (void*) -1; // Note: This line is a 'filler' so the code compiles.
 	}
 
 	// if pos is negative or past the size of the list
 	if ( pos > dll_size(l) - 1 || pos < 0){
-		//return 0;
-		return NULL;
+		return (void*) 0;
 	}
 	if ( pos == 0 ){
 		return l->head->data;
@@ -282,14 +273,12 @@ void* dll_get(dll_t* l, int pos){
 // Assume no negative numbers in the list or the number zero.
 void* dll_remove(dll_t* l, int pos){
 	if ( l == NULL ){		
-		return -1; // Note: This line is a 'filler' so the code compiles.
-		//return NULL;
+		return (void*) -1; // Note: This line is a 'filler' so the code compiles.
 	}
 
 	// if pos is negative or past the size of the list
 	if ( pos > dll_size(l) - 1 || pos < 0){
-		return 0;
-		//return NULL;
+		return (void*) 0;
 	}
 
 	if ( pos == 0 ){
@@ -310,14 +299,13 @@ void* dll_remove(dll_t* l, int pos){
 		l->count--;
 	}
 
-	return 1;
-	//return NULL;
+	return (void*) 1;
 }
 
 // Returns 1 on success
 // Returns 0 on failure ( or if the nodes don't exist )
 // Returns -1 if the graph is NULL.
-int contains_node(dll_t* l, void* item) {
+int dll_contains(dll_t* l, void* item) {
 	if (l == NULL) return -1;
 
 	node_t* iter = l->head;

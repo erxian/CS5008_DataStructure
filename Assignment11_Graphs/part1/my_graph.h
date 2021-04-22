@@ -170,7 +170,7 @@ int graph_remove_node(graph_t* g, int value){
 		graph_node_t* g_node = dll_get(in_Neighbors, j);  // get inNeighbors of this outNeighbor node
 		if (g_node == del_node) {
 			// validate if remove success
-			int success = dll_remove(in_Neighbors, j);
+			void* success = dll_remove(in_Neighbors, j);
 			if (success) {
  				g->numEdges--;
 			} else {
@@ -226,8 +226,8 @@ int contains_edge( graph_t * g, int source, int destination){
 
     dll_t* out_Neighbors = getOutNeighbors(g, source);
     dll_t* in_Neighbors = getInNeighbors(g, destination);
-    if (contains_node(out_Neighbors, des_node) &&
-	contains_node(in_Neighbors, source_node)) {
+    if (dll_contains(out_Neighbors, des_node) &&
+	dll_contains(in_Neighbors, source_node)) {
 		return 1;
     }
      
