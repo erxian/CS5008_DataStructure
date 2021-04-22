@@ -178,15 +178,11 @@ int graph_remove_node(graph_t* g, int value){
     //}
     int i, j;
     for (i=0; i < outNeigNum; i++) {
-	// get outNeighbor node
-	graph_node_t* out_neig_node = dll_get(outNeighbors, i);
-	// get the inNeighborNum of this outNeighbor node
-        int in_Neig_Num = getNumInNeighbors(g, out_neig_node->data);
-	// get inNeighbors of this outNeighbor node
-        dll_t* in_Neighbors = getInNeighbors(g, out_neig_node->data);
+	graph_node_t* out_neig_node = dll_get(outNeighbors, i);  // get outNeighbor node
+        int in_Neig_Num = getNumInNeighbors(g, out_neig_node->data);  // get the inNeighborNum of this outNeighbor node
+        dll_t* in_Neighbors = getInNeighbors(g, out_neig_node->data);  // get inNeighbors of this outNeighbor node
 	for(j=0; j <  in_Neig_Num; j++) {
-		graph_node_t* g_node = dll_get(in_Neighbors, j);
-		// find del_node position in inNeighbors, then remove it
+		graph_node_t* g_node = dll_get(in_Neighbors, j);  // get inNeighbors of this outNeighbor node
 		if (g_node == del_node) {
 			// validate if remove success
 			int success = dll_remove(in_Neighbors, j);
