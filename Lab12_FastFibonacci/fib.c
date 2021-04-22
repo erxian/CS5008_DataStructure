@@ -12,7 +12,13 @@
 // Implement the recursive version of fibonacci here.
 long fibonacci(int n){
     // TODO:
-    return 0;
+    if (n <= 0) {
+	return 0;
+    } else if (n == 1) {
+	return 1;
+    } else {
+	return fibonacci(n-1) + fibonacci(n-2);
+    }
 }
 
 // Store our previous 'memoized' values
@@ -32,10 +38,23 @@ void initialize(){
     }
 }
 
-
+// use dynamic programming to count fibonacci
 long dyn_fibonacci(int n){
    // TODO:
-   return 0;
+   if (memo[n] == -1) {
+       if (n <= 0 ) {
+            //set up our base case
+	    memo[0] = 0;
+	    return memo[0];
+       } else if (n == 1) {
+            //set up our base case
+	    memo[1] = 1;
+            return memo[1];
+       } else {
+	    memo[n] = dyn_fibonacci(n-1) + dyn_fibonacci(n-2);
+       }
+    }
+    return memo[n];
 }
 
 
@@ -51,6 +70,7 @@ int main(){
   start1 = clock();
   // perform fibonacci after starting clock
   long fib1 = fibonacci(fibNumber);
+
   end1 = clock(); 
   double experiment1 = ((double)(end1-start1)/CLOCKS_PER_SEC);
    // ===========================================
@@ -67,6 +87,7 @@ int main(){
   initialize();  
   // perform fibonacci after starting clock
   long fib2 = dyn_fibonacci(fibNumber);
+
   end2 = clock();
   double experiment2 = ((double)(end2-start2)/CLOCKS_PER_SEC);
   // ===========================================
