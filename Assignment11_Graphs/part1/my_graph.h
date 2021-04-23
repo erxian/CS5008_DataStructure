@@ -307,10 +307,8 @@ int graph_remove_edge(graph_t * g, int source, int destination){
     graph_node_t* des_node = find_node(g, destination);
     // the source or destination nodes don't exist
     if (source_node == NULL || des_node == NULL) return 0;
-
     // the edge doesn't exists
     if (!contains_edge(g, source, destination)) return 0;
-    
         
     //dll_remove_node(source_node->outNeighbors, des_node);
     //dll_remove_node(des_node->inNeighbors, source_node);
@@ -324,7 +322,6 @@ int graph_remove_edge(graph_t * g, int source, int destination){
 		dll_remove(outNeighbors, i);
 	}
     }
-
 
     int inNeigNum = getNumOutNeighbors(g, destination);
     dll_t* inNeighbors = getInNeighbors(g, destination); 
@@ -377,6 +374,71 @@ void free_graph(graph_t* g){
 
     free_dll(g->nodes);
     free(g);
+}
+
+
+// returns 1 if we can reach the destination from source
+// returns 0 if it is not reachable
+// returns -1 if the graph is NULL (using BFS)
+int is_reachable(graph_t * g, int source, int dest){
+	if (g == NULL) return -1;
+
+    	graph_node_t* start = find_node(g, source);
+    	graph_node_t* des_node = find_node(g, dest);
+		
+    	// the source or destination nodes don't exist
+    	if (start == NULL || des_node == NULL) return -1;
+
+	dll_t* working_list = create_dll();
+	dll_t* visited_list = create_dll();
+	
+	if (working_list == NULL) return -1;
+	if (visited_list == NULL) return -1;
+
+	// push start node to working list
+	dll_push_back(working_list, start);
+	while(dll_size(working_list) != 0) {
+		graph_node_t* currNode = dll_pop_front(working_list);
+		if (!dll_contains(visited_list, currNode)) {
+			// if currNode is dest_node, find path
+			if (currNode->data == dest) return 1;
+			dll_push_back(visited_list, currNode);
+			dll_t* outNeig_currNode = getOutNeighbors(g, currNode->data);
+			int outNeig_size = dll_size(outNeig_currNode);
+			int i;
+			for (i=0; i<outNeig_size; i++) {
+				graph_node_t* neig = dll_get(outNeig_currNode, i);
+				if (!dll_contains(working_list, neig)) {
+					dll_push_back(working_list, neig);
+			        }
+			}
+		}
+   	}	
+
+	free_dll(working_list);
+	free_dll(visited_list);
+	return 0;
+}
+
+// returns 1 if there is a cycle in the graph
+// returns 0 if no cycles exist in the graph
+// returns -1 if the graph is NULL 
+// You may use either BFS or DFS to complete this task.
+int has_cycle(graph_t * g){
+	return 0;    
+}
+
+// prints any path from source to destination if there 
+// exists a path from the source to the destination.
+// Note: Consider using one of the other functions to help you
+//       determine if a path exists first
+// (Choose either BFS or DFS, typically DFS is much simpler)
+//
+// Returns 1 if there is a path from source to destination
+// Returns 0 if there is not a path from a source to destination
+// Returns -1 if the graph is NULL
+int print_path(graph_t * g, int source, int dest){
+   return 0; 
 }
 
 // print graph nodes and its neighbors
