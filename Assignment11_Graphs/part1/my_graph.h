@@ -420,16 +420,6 @@ int is_reachable(graph_t * g, int source, int dest){
 	return 0;
 }
 
-// returns 1 if there is a cycle in the graph
-// returns 0 if no cycles exist in the graph
-// returns -1 if the graph is NULL 
-// You may use either BFS or DFS to complete this task.
-int has_cycle(graph_t * g){
-	if (g == NULL) return -1;
-	
-	return 0;    
-}
-
 void printStack(dll_t* stack) {
 	node_t* iter = stack->head;	
 	while (iter != NULL) {
@@ -440,10 +430,52 @@ void printStack(dll_t* stack) {
 	printf("\n");
 } 
 
+int cycleHelper(graph_t* g, graph_node_t* start, dll_t* stack) {
+	printStack(stack);
+	graph_node_t* currNode = dll_peek_back(stack);	
+	int outNeig_size = getNumOutNeighbors(g, currNode->data); 
+	dll_t* outNeig_currNode = getOutNeighbors(g, currNode->data); 
+
+	int i;
+	for (i=0; i < outNeig_size; i++) {
+		graph_node_t* neig = dll_get(outNeig_currNode, i);
+		if (dll_contains(stack, neig)) {
+			printf("has cycle\n");
+			return 1;
+		}
+		dll_push_back(stack, neig);
+		cycleHelper(g, start, stack);
+	}
+	dll_pop_back(stack);
+}
+
+// returns 1 if there is a cycle in the graph
+// returns 0 if no cycles exist in the graph
+// returns -1 if the graph is NULL 
+// You may use either BFS or DFS to complete this task.
+int has_cycle(graph_t * g){
+	if (g == NULL) return -1;
+
+	int i;
+	int hasCycle = 0;
+	for (i=0; i < g->numNodes; i++) {
+		graph_node_t* start = dll_get(g->nodes, i);
+		dll_t* stack = create_dll();
+			
+		dll_push_back(stack, start);
+		hasCycle = cycleHelper(g, start, stack);
+		if (hasCycle) {
+			printf("success\n");
+			return 1;
+		}
+	} 
+	return 0;    
+}
+
+
 void printHelper(graph_t* g, graph_node_t* dest_node, dll_t* stack) {
 	if (g == NULL || dest_node == NULL || stack == NULL) return;
 
-	//printStack(stack);
 	graph_node_t* currNode = dll_peek_back(stack);	
 	int outNeig_size = getNumOutNeighbors(g, currNode->data); 
 	dll_t* outNeig_currNode = getOutNeighbors(g, currNode->data); 
