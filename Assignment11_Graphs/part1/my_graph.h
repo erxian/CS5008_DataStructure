@@ -425,7 +425,41 @@ int is_reachable(graph_t * g, int source, int dest){
 // returns -1 if the graph is NULL 
 // You may use either BFS or DFS to complete this task.
 int has_cycle(graph_t * g){
+	if (g == NULL) return -1;
+	
 	return 0;    
+}
+
+void printStack(dll_t* stack) {
+	node_t* iter = stack->head;	
+	while (iter != NULL) {
+		graph_node_t* g_node = iter->data;
+		printf("%d ", g_node->data);
+		iter = iter->next;
+	}
+	printf("\n");
+} 
+
+void printHelper(graph_t* g, graph_node_t* dest_node, dll_t* stack) {
+	if (g == NULL || dest_node == NULL || stack == NULL) return;
+
+	//printStack(stack);
+	graph_node_t* currNode = dll_peek_back(stack);	
+	int outNeig_size = getNumOutNeighbors(g, currNode->data); 
+	dll_t* outNeig_currNode = getOutNeighbors(g, currNode->data); 
+	if (currNode == dest_node) {
+		//return stack;
+		printStack(stack);
+	}
+	int i;
+	for (i=0; i < outNeig_size; i++) {
+		graph_node_t* neig = dll_get(outNeig_currNode, i);
+		if (!dll_contains(stack, neig)) {
+			dll_push_back(stack, neig);
+			printHelper(g, dest_node, stack);
+		}
+	}
+	dll_pop_back(stack);
 }
 
 // prints any path from source to destination if there 
@@ -438,7 +472,23 @@ int has_cycle(graph_t * g){
 // Returns 0 if there is not a path from a source to destination
 // Returns -1 if the graph is NULL
 int print_path(graph_t * g, int source, int dest){
-   return 0; 
+	if (g == NULL)  return -1;
+
+	graph_node_t* start = find_node(g, source);	
+	graph_node_t* dest_node = find_node(g, dest);	
+    	if (start == NULL || dest_node == NULL) return -1;
+
+	// if source to dest is not reachable, return 0
+	if (!is_reachable(g, source, dest)) return 0;
+
+	dll_t* stack = create_dll();
+	if (stack == NULL) return -1;
+
+	dll_push_back(stack, start);
+	printHelper(g, dest_node, stack);
+	//printStack(new_stack);
+	
+   	return 1; 
 }
 
 // print graph nodes and its neighbors

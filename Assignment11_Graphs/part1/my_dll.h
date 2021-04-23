@@ -304,7 +304,7 @@ void* dll_remove(dll_t* l, int pos){
 
 // Returns 1 on success
 // Returns 0 on failure ( or if the nodes don't exist )
-// Returns -1 if the graph is NULL.
+// Returns -1 if the dll is NULL.
 int dll_contains(dll_t* l, void* item) {
 	if (l == NULL) return -1;
 
@@ -317,6 +317,14 @@ int dll_contains(dll_t* l, void* item) {
 	}	
 	return 0;
 }
+
+// Return NULL if the dll is NULL
+// Return the tail node data
+void* dll_peek_back(dll_t* l) {
+	if (l == NULL) return NULL;
+	return l->tail->data;
+}
+
 
 // Removes the node with value item
 // Retruns NULL on failure (e.g. del node not in dll or node is null
