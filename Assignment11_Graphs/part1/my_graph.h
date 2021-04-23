@@ -400,7 +400,11 @@ int is_reachable(graph_t * g, int source, int dest){
 		graph_node_t* currNode = dll_pop_front(working_list);
 		if (!dll_contains(visited_list, currNode)) {
 			// if currNode is dest_node, find path
-			if (currNode->data == dest) return 1;
+			if (currNode->data == dest) {
+				free_dll(working_list);
+				free_dll(visited_list);
+				return 1;
+			}
 			dll_push_back(visited_list, currNode);
 			dll_t* outNeig_currNode = getOutNeighbors(g, currNode->data);
 			int outNeig_size = dll_size(outNeig_currNode);
@@ -413,7 +417,6 @@ int is_reachable(graph_t * g, int source, int dest){
 			}
 		}
    	}	
-
 	free_dll(working_list);
 	free_dll(visited_list);
 	return 0;

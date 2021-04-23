@@ -55,7 +55,7 @@ int main(int argc, const char * argv[]) {
 
     printf("\n");
     has_cycle(graph);
-    //free_graph(graph);
+    free_graph(graph);
 
     return 0;
 }
