@@ -34,7 +34,7 @@ int main(int argc, const char * argv[]) {
     graph_add_edge(graph, 2, 3);
     graph_add_edge(graph, 2, 4);
     graph_add_edge(graph, 3, 4);
-    printf("contains edge 4 to 2 = %d\n", contains_edge(graph, 4, 2));
+    printf("contains edge 1 to 4 = %d\n", contains_edge(graph, 1, 4));
     print_graph(graph);
     printf("before total nodes = %d\n", graph_num_nodes(graph));
     printf("before total edges = %d\n", graph_num_edges(graph));
