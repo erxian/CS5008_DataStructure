@@ -37,45 +37,25 @@ int main(int argc, const char * argv[]) {
     graph_add_edge(graph, 2, 6);
     graph_add_edge(graph, 6, 7);
     graph_add_edge(graph, 7, 8);
-    graph_add_edge(graph, 8, 6);
+    //graph_add_edge(graph, 8, 6);
     graph_add_edge(graph, 8, 9);
     graph_add_edge(graph, 9, 10);
     graph_add_edge(graph, 8, 11);
-    //graph_add_edge(graph, 11, 1);
-
-    //printf("contains edge 1 to 4 = %d\n", contains_edge(graph, 1, 4));
-    //print_graph(graph);
-    //printf("before total nodes = %d\n", graph_num_nodes(graph));
-    //printf("before total edges = %d\n", graph_num_edges(graph));
-
-    //printf("from node%d to node%d contains edge %d\n", 2, 4, contains_edge(graph, 2, 4));
-    //printf("node%d in neighbors nums is %d\n", node, getNumInNeighbors(graph, node));
-    //printf("node%d out neighbors nums is %d\n", 1, getNumOutNeighbors(graph, 1));
-    //graph_node_t* target_node = find_node(graph, node);
-
-    //int node = 2;
-    //graph_remove_node(graph, node);
+    graph_add_edge(graph, 11, 1);
 
     printf("\n");
-    //print_graph(graph);
-    //printf("after total nodes = %d\n", graph_num_nodes(graph));
-    //printf("after total edges = %d\n", graph_num_edges(graph));
    
     int node1 = 8;
     int node2 = 7;
     printf("node%d to node%d is reachable %d\n", node1, node2, is_reachable(graph, node1, node2));
     printf("\n");
+
     printf("node%d to node%d path is: ", node1, node2);
     print_path(graph, node1, node2);
-    //printf("node%d positon is %d\n", node, dll_get_pos(getOutNeighbors(graph, 1), target_node));
-    //graph_remove_edge(graph, 1, 3);
 
-    //printf("node%d in neighbors nums is %d\n", node, getNumInNeighbors(graph, node));
-    //printf("node%d out neighbors nums is %d\n", 1, getNumOutNeighbors(graph, 1));
-    //print_graph(graph);
     printf("\n");
     has_cycle(graph);
-    free_graph(graph);
+    //free_graph(graph);
 
     return 0;
 }

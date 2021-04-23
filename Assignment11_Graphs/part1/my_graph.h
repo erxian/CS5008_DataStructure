@@ -419,6 +419,30 @@ int is_reachable(graph_t * g, int source, int dest){
 	return 0;
 }
 
+// returns 1 if there is a cycle in the graph
+// returns 0 if no cycles exist in the graph
+// returns -1 if the graph is NULL 
+// You may use either BFS or DFS to complete this task.
+int has_cycle(graph_t * g){
+	if (g == NULL) return -1;
+
+	int i, j;
+	for (i=0; i < g->numNodes; i++) {
+		graph_node_t* start_node = dll_get(g->nodes, i);
+		int inNeig_size = getNumInNeighbors(g, start_node->data);
+		dll_t* inNeighbors = getInNeighbors(g, start_node->data);
+		for (j=0; j < inNeig_size; j++) {
+			graph_node_t* neig = dll_get(inNeighbors, j);
+			if (is_reachable(g, start_node->data, neig->data)) {
+				printf("there is a cycle\n");
+				return 1;
+			}
+		}
+	}
+	printf("no cycle in this graph\n");
+	return 0; 
+}
+
 // print data in a stack
 void printStack(dll_t* stack) {
 	node_t* iter = stack->head;	
@@ -430,47 +454,6 @@ void printStack(dll_t* stack) {
 	printf("\n");
 } 
 
-// recursively push out neighbors back to stack, if hits some
-// node theat in the current stack, then there is cycle
-int cycleHelper(graph_t* g, dll_t* stack) {
-	printStack(stack);
-	graph_node_t* currNode = dll_peek_back(stack);	
-	int outNeig_size = getNumOutNeighbors(g, currNode->data); 
-	dll_t* outNeig_currNode = getOutNeighbors(g, currNode->data); 
-
-	int i;
-	for (i=0; i < outNeig_size; i++) {
-		graph_node_t* neig = dll_get(outNeig_currNode, i);
-		if (dll_contains(stack, neig)) {
-			printf("has cycle\n");
-			return 1;
-		}
-		dll_push_back(stack, neig);
-		cycleHelper(g, stack);
-	}
-	dll_pop_back(stack);
-}
-
-// returns 1 if there is a cycle in the graph
-// returns 0 if no cycles exist in the graph
-// returns -1 if the graph is NULL 
-// You may use either BFS or DFS to complete this task.
-int has_cycle(graph_t * g){
-	if (g == NULL) return -1;
-
-	int i;
-	for (i=0; i < g->numNodes; i++) {
-		graph_node_t* start_node = dll_get(g->nodes, i);
-		dll_t* stack = create_dll();
-
-		dll_push_back(stack, start_node);
-		cycleHelper(g, stack);
-
-		free_dll(stack);
-	}
-	return 0;    
-}
-
 // recursive get nodes out neighbors and push it back to stack
 // if a node is equal to destination node, then print the stack
 void printHelper(graph_t* g, graph_node_t* dest_node, dll_t* stack) {
@@ -480,7 +463,6 @@ void printHelper(graph_t* g, graph_node_t* dest_node, dll_t* stack) {
 	int outNeig_size = getNumOutNeighbors(g, currNode->data); 
 	dll_t* outNeig_currNode = getOutNeighbors(g, currNode->data); 
 	if (currNode == dest_node) {
-		//return stack;
 		printStack(stack);
 	}
 	int i;
@@ -518,39 +500,38 @@ int print_path(graph_t * g, int source, int dest){
 
 	dll_push_back(stack, start);
 	printHelper(g, dest_node, stack);
-	//printStack(new_stack);
 	free_dll(stack);
 	
    	return 1; 
 }
 
 // print graph nodes and its neighbors
-void print_graph(graph_t* g) {
-	if (g == NULL) return;
-	node_t* iter = g->nodes->head;
-	while (iter != NULL){
-		graph_node_t* g_node = iter->data;
-		printf("In neighbors are: ");
-		node_t* iter_in = g_node->inNeighbors->head;
-		while (iter_in != NULL) {
-			graph_node_t* tmp_in_node = iter_in->data;
-			printf("%d ", tmp_in_node->data);
-			iter_in = iter_in->next;
-		}
-
-		printf(", node is %d, ", g_node->data);
-
-		printf("Out neighbors are: ");
-		node_t* iter_out = g_node->outNeighbors->head;
-		while (iter_out != NULL) {
-			graph_node_t* tmp_out_node = iter_out->data;
-			printf("%d ", tmp_out_node->data);
-			iter_out = iter_out->next;
-		}
-		printf("\n");
-		iter = iter->next;	
-	}	
-}
+//void print_graph(graph_t* g) {
+//	if (g == NULL) return;
+//	node_t* iter = g->nodes->head;
+//	while (iter != NULL){
+//		graph_node_t* g_node = iter->data;
+//		printf("In neighbors are: ");
+//		node_t* iter_in = g_node->inNeighbors->head;
+//		while (iter_in != NULL) {
+//			graph_node_t* tmp_in_node = iter_in->data;
+//			printf("%d ", tmp_in_node->data);
+//			iter_in = iter_in->next;
+//		}
+//
+//		printf(", node is %d, ", g_node->data);
+//
+//		printf("Out neighbors are: ");
+//		node_t* iter_out = g_node->outNeighbors->head;
+//		while (iter_out != NULL) {
+//			graph_node_t* tmp_out_node = iter_out->data;
+//			printf("%d ", tmp_out_node->data);
+//			iter_out = iter_out->next;
+//		}
+//		printf("\n");
+//		iter = iter->next;	
+//	}	
+//}
 
 
 #endif
