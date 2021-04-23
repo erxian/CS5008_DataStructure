@@ -376,7 +376,6 @@ void free_graph(graph_t* g){
     free(g);
 }
 
-
 // returns 1 if we can reach the destination from source
 // returns 0 if it is not reachable
 // returns -1 if the graph is NULL (using BFS)
@@ -420,6 +419,7 @@ int is_reachable(graph_t * g, int source, int dest){
 	return 0;
 }
 
+// print data in a stack
 void printStack(dll_t* stack) {
 	node_t* iter = stack->head;	
 	while (iter != NULL) {
@@ -430,7 +430,9 @@ void printStack(dll_t* stack) {
 	printf("\n");
 } 
 
-int cycleHelper(graph_t* g, graph_node_t* start, dll_t* stack) {
+// recursively push out neighbors back to stack, if hits some
+// node theat in the current stack, then there is cycle
+int cycleHelper(graph_t* g, dll_t* stack) {
 	printStack(stack);
 	graph_node_t* currNode = dll_peek_back(stack);	
 	int outNeig_size = getNumOutNeighbors(g, currNode->data); 
@@ -444,7 +446,7 @@ int cycleHelper(graph_t* g, graph_node_t* start, dll_t* stack) {
 			return 1;
 		}
 		dll_push_back(stack, neig);
-		cycleHelper(g, start, stack);
+		cycleHelper(g, stack);
 	}
 	dll_pop_back(stack);
 }
@@ -457,22 +459,20 @@ int has_cycle(graph_t * g){
 	if (g == NULL) return -1;
 
 	int i;
-	int hasCycle = 0;
 	for (i=0; i < g->numNodes; i++) {
-		graph_node_t* start = dll_get(g->nodes, i);
+		graph_node_t* start_node = dll_get(g->nodes, i);
 		dll_t* stack = create_dll();
-			
-		dll_push_back(stack, start);
-		hasCycle = cycleHelper(g, start, stack);
-		if (hasCycle) {
-			printf("success\n");
-			return 1;
-		}
-	} 
+
+		dll_push_back(stack, start_node);
+		cycleHelper(g, stack);
+
+		free_dll(stack);
+	}
 	return 0;    
 }
 
-
+// recursive get nodes out neighbors and push it back to stack
+// if a node is equal to destination node, then print the stack
 void printHelper(graph_t* g, graph_node_t* dest_node, dll_t* stack) {
 	if (g == NULL || dest_node == NULL || stack == NULL) return;
 
@@ -519,6 +519,7 @@ int print_path(graph_t * g, int source, int dest){
 	dll_push_back(stack, start);
 	printHelper(g, dest_node, stack);
 	//printStack(new_stack);
+	free_dll(stack);
 	
    	return 1; 
 }

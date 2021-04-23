@@ -37,11 +37,11 @@ int main(int argc, const char * argv[]) {
     graph_add_edge(graph, 2, 6);
     graph_add_edge(graph, 6, 7);
     graph_add_edge(graph, 7, 8);
-    //graph_add_edge(graph, 8, 6);
+    graph_add_edge(graph, 8, 6);
     graph_add_edge(graph, 8, 9);
     graph_add_edge(graph, 9, 10);
     graph_add_edge(graph, 8, 11);
-    graph_add_edge(graph, 11, 1);
+    //graph_add_edge(graph, 11, 1);
 
     //printf("contains edge 1 to 4 = %d\n", contains_edge(graph, 1, 4));
     //print_graph(graph);
