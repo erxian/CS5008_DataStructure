@@ -322,9 +322,8 @@ int dll_contains(dll_t* l, void* item) {
 // Return the tail node data
 void* dll_peek_back(dll_t* l) {
 	if (l == NULL) return NULL;
-	return l->tail->data;
+	return (void*) l->tail->data;
 }
-
 
 // Removes the node with value item
 // Retruns NULL on failure (e.g. del node not in dll or node is null
@@ -371,14 +370,14 @@ void free_dll(dll_t* t){
 }
 
 // Helper function
-void printDll(dll_t* l){
-	node_t* itr = l->head;
-	while( itr != NULL){
-		printf("%d ", *((int*)itr->data));
-		itr = itr->next;
-	}
-	printf("\n");
-}
+//void printDll(dll_t* l){
+//	node_t* itr = l->head;
+//	while( itr != NULL){
+//		printf("%d ", *((int*)itr->data));
+//		itr = itr->next;
+//	}
+//	printf("\n");
+//}
 
 #endif
 

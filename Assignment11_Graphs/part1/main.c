@@ -37,7 +37,7 @@ int main(int argc, const char * argv[]) {
     graph_add_edge(graph, 2, 6);
     graph_add_edge(graph, 6, 7);
     graph_add_edge(graph, 7, 8);
-    //graph_add_edge(graph, 8, 6);
+    graph_add_edge(graph, 8, 6);
     graph_add_edge(graph, 8, 9);
     graph_add_edge(graph, 9, 10);
     graph_add_edge(graph, 8, 11);
@@ -45,12 +45,20 @@ int main(int argc, const char * argv[]) {
 
     printf("\n");
    
+    //printf("graph node number is %d, edges is %d\n", graph->numNodes, graph->numEdges);
+    //print_graph(graph);
+    //graph_remove_node(graph, 8);
+    //
+    //printf("\n");
+    //printf("graph node number is %d, edges is %d\n", graph->numNodes, graph->numEdges);
+    //print_graph(graph);
+    
     int node1 = 8;
     int node2 = 7;
     printf("node%d to node%d is reachable %d\n", node1, node2, is_reachable(graph, node1, node2));
     printf("\n");
 
-    printf("node%d to node%d path is: ", node1, node2);
+    printf("node%d to node: %d\n", node1, node2);
     print_path(graph, node1, node2);
 
     printf("\n");
