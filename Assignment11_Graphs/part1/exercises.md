@@ -9,10 +9,10 @@ Discuss and answer the following questions (Make sure to elaborate and justify y
 
 ## Answers
 
-1. O(V+E)
-2. O(V^2)
-3. O(V+E)
-4. O(V+E)
+1. O(V+E), where V is vertices and E is edges
+2. O(V^2), where V is vertices
+3. O(V+E), where V is vertices and E is edges
+4. O(V+E), where V is vertices and E is edges
 
 
 ## Interview Prep (Optional +1% Bonus on assignment)
