@@ -255,12 +255,12 @@ int graph_remove_node(graph_t* g, int value){
     int i, j;
     // remove del_node from all its outNeighbors 
     for (i=0; i < outNeig_size; i++) {
-	graph_node_t* g_node = dll_get(outNeighbors, i);
-        int g_size = getNumInNeighbors(g, g_node->data);
-        dll_t* g_inNeighbors = getInNeighbors(g, g_node->data);
+	graph_node_t* g_node_out = dll_get(outNeighbors, i);
+        int g_size = getNumInNeighbors(g, g_node_out->data);
+        dll_t* g_inNeighbors = getInNeighbors(g, g_node_out->data);
 	for(j=0; j <  g_size; j++) {
-		graph_node_t* g_node = dll_get(g_inNeighbors, j);
-		if (g_node == del_node) {
+		graph_node_t* g_node_in = dll_get(g_inNeighbors, j);
+		if (g_node_in == del_node) {
 			if(!dll_remove(g_inNeighbors, j)) {
 				return 0;
 			}
@@ -277,12 +277,12 @@ int graph_remove_node(graph_t* g, int value){
     printf("\n");
     // remove del_node from all its inNeighbors 
     for (i=0; i < inNeig_size; i++) {
-	graph_node_t* g_node = dll_get(inNeighbors, i);
-        int g_size = getNumOutNeighbors(g, g_node->data);
-        dll_t* g_outNeighbors = getOutNeighbors(g, g_node->data);
+	graph_node_t* g_node_in = dll_get(inNeighbors, i);
+        int g_size = getNumOutNeighbors(g, g_node_in->data);
+        dll_t* g_outNeighbors = getOutNeighbors(g, g_node_in->data);
 	for(j=0; j <  g_size; j++) {
-		graph_node_t* g_node = dll_get(g_outNeighbors, j);
-		if (g_node == del_node) {
+		graph_node_t* g_node_out = dll_get(g_outNeighbors, j);
+		if (g_node_out == del_node) {
 			if (!dll_remove(g_outNeighbors, j)) {
 				return 0;
 			}
